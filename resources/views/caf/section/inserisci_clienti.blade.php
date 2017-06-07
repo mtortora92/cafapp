@@ -1,17 +1,12 @@
-@php
-    $tipiInvalidita = \cafapp\Models\TipoInvaliditum::all();
-    $tipiDocumenti = \cafapp\Models\TipiDocumentiIdentitum::all();
-    $tipiProfessione = \cafapp\Models\TipoProfessione::all();
-    $titoliStudio = \cafapp\Models\TitoloStudio::all();
-@endphp
-
 @extends('caf.layout')
 
 @section('title', 'Inserisci clienti')
 
 @section('styleCSS')
-    <!-- Css di jquery ui -->
-    <link href="../assets/jquery-ui/jquery-ui.css" rel="stylesheet"/>
+    <!-- Css di bootstrap datepicker -->
+    <link href="{{ URL::asset('assets/bootstrap-datepicker/bootstrap-datepicker3.css')}}" rel="stylesheet"/>
+    <!-- Css di select2 -->
+    <link href="{{ URL::asset('assets/select2/dist/css/select2.css')}}" rel="stylesheet"/>
 @endsection
 
 @section('titleSection', 'Inserisci clienti')
@@ -26,7 +21,7 @@
                         <p class="category">Inserisci le informazione sul cliente</p>
                     </div>
                     <div class="card-content">
-                        <form id="formInserimentoCliente" method="post" action="{{url('/inserisci_clienti')}}">
+                        <form id="formInserimentoCliente" method="post" action="{{url('/clienti')}}">
                             {{csrf_field()}}
                             <div class="row">
                                 <div class="col-md-2">
@@ -38,25 +33,25 @@
                                 <div class="col-md-3">
                                     <div class="form-group label-floating">
                                         <label class="control-label">N. della Tessera Enotria</label>
-                                        <input name="numTesseraEnotria" type="text" class="form-control" >
+                                        <input name="numTesseraEnotria" value="" type="text" class="form-control" >
                                     </div>
                                 </div>
                                 <div class="col-md-2 col-md-offset-1">
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" name="socio">
+                                            <input type="checkbox" value="1" name="socio">
                                             Socio
                                         </label>
                                     </div>
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" name="delegaSindacale">
+                                            <input type="checkbox" value="1" name="delegaSindacale">
                                             Delega Sindacale
                                         </label>
                                     </div>
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" name="socioEnotriaCral">
+                                            <input type="checkbox" value="1" name="socioEnotriaCral">
                                             Socio Enotria Cral
                                         </label>
                                     </div>
@@ -64,13 +59,13 @@
                                 <div class="col-md-3 col-md-offset-1">
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" value="2" name="tipologiaCliente">
+                                            <input type="radio" value="2" name="idTipologiaCliente">
                                             Persona Giuridica
                                         </label>
                                     </div>
                                     <div class="radio">
                                         <label>
-                                            <input type="radio" value="1" name="tipologiaCliente" checked="true">
+                                            <input type="radio" value="1" name="idTipologiaCliente" checked="true">
                                             Persona Fisica
                                         </label>
                                     </div>
@@ -110,13 +105,13 @@
                                 <div class="col-md-4">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Data di nascita (gg/mm/aaaa)</label>
-                                        <input type="text" id="dataNascita" name="dataNascita" class="form-control" >
+                                        <input type="text" id="dataNascita" name="dataNascita" class="form-control datepicker-field" >
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Luogo di nascita</label>
-                                        <input onkeyup="ottieniListaCitta('comuneNascita')" id="comuneNascita" name="comuneNascita" type="text" class="form-control">
+                                        <select id="luogoNascita" name="luogoNascita" class="form-control select-comuni"></select>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -143,7 +138,7 @@
                                 <div class="col-md-2 col-md-offset-1">
                                     <div class="form-group">
                                         <label for="tipoDocumento">Invalidità:</label>
-                                        <select class="form-control" id="invalidita" name="invalidita">
+                                        <select class="form-control" id="invalidita" name="idInvalidita">
                                             <option value="0">Nessuna</option>
                                             @foreach($tipiInvalidita as $item)
                                                 <option value="{{$item->id}}">{{$item->invalidita}}</option>
@@ -154,14 +149,14 @@
                                 <div class="col-md-2">
                                     <div class="form-group label-floating">
                                         <label class="control-label">% invalidità</label>
-                                        <input type="text" name="percentInvalidita" class="form-control" >
+                                        <input type="text" name="percentuale" class="form-control" >
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <br>
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" name="accompagnamento">
+                                            <input type="checkbox" value="1" name="accompagnamento">
                                             Accompagnamento
                                         </label>
                                     </div>
@@ -172,13 +167,13 @@
                                 <div class="col-md-7">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Indirizzo</label>
-                                        <input type="text" name="indirizzo" class="form-control" >
+                                        <input type="text" name="indirizzoResidenza" class="form-control" >
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Comune di residenza</label>
-                                        <input onkeyup="ottieniListaCitta('comuneResidenza')" type="text" id="comuneResidenza" name="comuneResidenza" class="form-control" >
+                                        <select id="comuneResidenza" name="comuneResidenza" class="form-control select-comuni"></select>
                                     </div>
                                 </div>
                             </div>
@@ -187,7 +182,7 @@
                                 <div class="col-md-2">
                                     <div class="form-group">
                                         <label for="tipoDocumento">Tipo documento:</label>
-                                        <select class="form-control" id="tipoDocumento" name="tipoDocumento">
+                                        <select class="form-control" id="tipoDocumento" name="idTipoDocumento">
                                             @foreach($tipiDocumenti as $item)
                                                 <option value="{{$item->id}}">{{$item->descrizione}}</option>
                                             @endforeach
@@ -197,19 +192,19 @@
                                 <div class="col-md-3">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Data rilascio (gg/mm/aaaa)</label>
-                                        <input type="text" class="form-control" id="dataRilascio" name="dataRilascio">
+                                        <input type="text" class="form-control datepicker-field" id="dataRilascio" name="dataRilascio">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Rilasciato dal comune</label>
-                                        <input onkeyup="ottieniListaCitta('comuneDiRilascio')" type="text" class="form-control" id="comuneDiRilascio" name="comuneDiRilascio">
+                                        <select id="comuneDiRilascio" name="rilasciatoDa" class="form-control select-comuni"></select>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Data scadenza (gg/mm/aaaa)</label>
-                                        <input type="text" class="form-control" id="dataScadenza" name="dataScadenza">
+                                        <input type="text" class="form-control datepicker-field" id="dataScadenza" name="dataScadenza">
                                     </div>
                                 </div>
                             </div>
@@ -218,7 +213,7 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label for="tipoDocumento">Titolo di studio:</label>
-                                        <select class="form-control" id="titoloStudio" name="titoloStudio">
+                                        <select class="form-control" id="titoloStudio" name="idTitoloStudio">
                                             @foreach($titoliStudio as $item)
                                                 <option value="{{$item->id}}">{{$item->titolo}}</option>
                                             @endforeach
@@ -228,7 +223,7 @@
                                 <div class="col-md-3 col-md-offset-1">
                                     <div class="form-group">
                                         <label for="tipoDocumento">Professione:</label>
-                                        <select class="form-control" id="tipoProfessione" name="tipoProfessione">
+                                        <select class="form-control" id="tipoProfessione" name="idProfessione">
                                             @foreach($tipiProfessione as $item)
                                                 <option value="{{$item->id}}">{{$item->professione}}</option>
                                             @endforeach
@@ -273,12 +268,41 @@
 @endsection
 
 @section('functionJavascript')
-    <script src="../assets/jquery-ui/jquery-ui.js" type="text/javascript"></script>
-    <script src="../assets/jquery-validate/jquery.validate.js" type="text/javascript"></script>
-    <script src="../assets/jquery-validate/additional-methods.js" type="text/javascript"></script>
+    <script src="{{URL::asset('assets/jquery-validate/jquery.validate.js')}}" type="text/javascript"></script>
+    <script src="{{URL::asset('assets/jquery-validate/additional-methods.js')}}" type="text/javascript"></script>
+    <script src="{{URL::asset('assets/bootstrap-datepicker/bootstrap-datepicker.js')}}" type="text/javascript"></script>
+    <script src="{{URL::asset('assets/select2/dist/js/select2.js')}}" type="text/javascript"></script>
+    <script src="{{URL::asset('assets/select2/dist/js/select2.full.js')}}" type="text/javascript"></script>
 
     <script type="text/javascript">
         $(document).ready(function(){
+            $('.datepicker-field').datepicker({
+                format: 'dd/mm/yyyy',
+                autoclose: true,
+                todayHighlight: true,
+            });
+
+            $('.select-comuni').select2({
+                minlength: 3,
+                placeholder: 'Seleziona il comune',
+                ajax: {
+                    url: '{{url('select2-autocomplete-ajax')}}',
+                    dataType: 'json',
+                    delay: 250,
+                    processResults: function (data) {
+                        return {
+                            results:  $.map(data, function (item) {
+                                return {
+                                    text: item.comune,
+                                    id: item.id
+                                }
+                            })
+                        };
+                    },
+                    cache: true
+                }
+            });
+
             $("#formInserimentoCliente").validate({
                 rules: {
                     'cognome':{
@@ -288,7 +312,12 @@
                         required: true,
                     },
                     'dataNascita':{
-                        required: false,
+                        dateITA: true,
+                    },
+                    'dataRilascio':{
+                        dateITA: true,
+                    },
+                    'dataScadenza':{
                         dateITA: true,
                     },
                 },
@@ -311,30 +340,5 @@
                 }
             });
         });
-
-        function ottieniListaCitta(idTextField){
-            var data = $("#"+idTextField).val();
-
-            $.ajax({
-                url : '/getData/'+data,
-                type : 'get',
-                cache : false,
-                success : function(data) {
-                    autocompletamento(data, idTextField);
-                }
-            });
-        }
-
-        function autocompletamento(data, idTextField){
-            $('input:text').bind({
-
-            });
-
-            $("#"+idTextField).autocomplete({
-                minlenght: 3,
-                autoFocus: true,
-                source: data,
-            });
-        }
     </script>
 @endsection

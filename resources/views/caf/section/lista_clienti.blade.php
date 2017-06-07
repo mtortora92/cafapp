@@ -1,9 +1,3 @@
-@php
-    $arrayClienti = DB::table('Clienti')
-        ->join('AnagraficheClienti', 'Clienti.idAnagrafica', '=', 'AnagraficheClienti.id')
-        ->select('AnagraficheClienti.*','Clienti.id as idCliente')->get();
-@endphp
-
 @extends('caf.layout')
 
 @section('title', 'Lista clienti')
@@ -26,14 +20,36 @@
                             <th>Nome</th>
                             <th>Nato/a il</th>
                             <th>Nato/a a</th>
+                            <th></th>
                             </thead>
                             <tbody>
-                            @foreach($arrayClienti as $cliente)
-                                <tr onclick="location.href='{{url("/modifica_cliente/$cliente->idCliente")}}'" style="cursor:pointer">
+                            @foreach($clienti as $cliente)
+                                @php($id = $cliente->cliente->id)
+                                <tr>
                                     <td>{{$cliente->cognome}}</td>
                                     <td>{{$cliente->nome}}</td>
-                                    <td>{{str_replace('-', '/', date('d-m-Y', strtotime($cliente->dataNascita)))}}</td>
-                                    <td>{{$cliente->luogoNascita}}</td>
+                                    <td>
+                                        @if(isset($cliente->dataNascita))
+                                        {{str_replace('-', '/', date('d-m-Y', strtotime($cliente->dataNascita)))}}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if(isset($cliente->luogo_nascita->comune))
+                                        {{$cliente->luogo_nascita->comune}}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <button onclick="location.href='{{url("/clienti/$id/edit")}}'" type="button" rel="tooltip" title="Modifica" class="btn btn-primary btn-simple btn-xs">
+                                            <i class="material-icons">edit</i>
+                                        </button>
+                                        <form method="post" action="{{url("/clienti/$id")}}" id="formEliminaCliente{{$id}}">
+                                            {{csrf_field()}}
+                                            {{ method_field('DELETE') }}
+                                        <button onclick="$('#formEliminaCliente{{$id}}').submit()" type="button" rel="tooltip" title="Elimina" class="btn btn-danger btn-simple btn-xs">
+                                            <i class="material-icons">close</i>
+                                        </button>
+                                        </form>
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>

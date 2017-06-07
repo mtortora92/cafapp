@@ -11,15 +11,9 @@
 |
 */
 
-Route::get('getData/{term}', function ($term){
-    $data = \cafapp\Models\Comuni::where('comune','like',"$term%")->get();
-
-    foreach ($data as $item){
-        $returnArray[] = array('value' => "$item->comune ($item->provincia)");
-    }
-
-    return Response::json($returnArray);
-});
+// Route Select2
+Route::get('select2-autocomplete', 'Select2AutocompleteController@layout');
+Route::get('select2-autocomplete-ajax', 'Select2AutocompleteController@getComuni');
 
 // Schermata iniziale di login
 
@@ -57,29 +51,8 @@ Route::get('/rimuovi_titolo_studio/{id}','GestioneTendineController@rimuoviTitol
 Route::get('/rimuovi_tipo_professione/{id}','GestioneTendineController@rimuoviTipoProfessione');
 Route::get('/rimuovi_tipo_documento/{id}','GestioneTendineController@rimuoviTipoDocumento');
 
-/*
-    Route della lista clienti
- */
-Route::get('/lista_clienti', function(){
-    return view('caf.section.lista_clienti');
-});
-
-/*
-    Route della gestione inserimento clienti
- */
-Route::get('/inserisci_clienti', function(){
-    return view('caf.section.inserisci_clienti');
-})->name('visualizzaInserisciCliente');
-Route::post('/inserisci_clienti','GestioneClientiController@inserisciCliente');
-
-/*
-    Route della gestione modifica clienti
- */
-
-Route::get('/modifica_cliente/{idCliente}', function($idCliente){
-    return view('caf.section.modifica_clienti',["idCliente"=>$idCliente]);
-})->name('visualizzaModificaCliente');
-Route::post('/modifica_cliente','GestioneClientiController@modificaCliente');
+/* Route resource Clienti */
+Route::resource('clienti', 'ClientiController');
 
 // Route per l'autenticazione built in di laravel
 

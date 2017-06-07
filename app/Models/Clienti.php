@@ -22,5 +22,19 @@ class Clienti extends Model
 
     protected $guarded = [];
 
-        
+    public function documento_identita() {
+        return $this->belongsTo('cafapp\Models\DocumentoIdentitum','idDocumentoIdentita');
+    }
+
+    public function invalidita() {
+        return $this->belongsTo('cafapp\Models\Invaliditum','idInvalidita');
+    }
+
+    public function anagrafica() {
+        return $this->belongsTo('cafapp\Models\AnagraficheClienti','idAnagrafica');
+    }
+
+    public function altre_info() {
+        return $this->belongsTo('cafapp\Models\AltreInfoCliente','idAltreInfo');
+    }
 }

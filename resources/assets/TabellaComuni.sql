@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `Comuni`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Comuni` (
-  `id_citta` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `comune` varchar(255) DEFAULT NULL,
   `regione` varchar(50) DEFAULT NULL,
   `provincia` varchar(2) DEFAULT NULL,

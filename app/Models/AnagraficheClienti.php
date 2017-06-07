@@ -29,5 +29,16 @@ class AnagraficheClienti extends Model
 
     protected $guarded = [];
 
-        
+    public function cliente() {
+        return $this->hasOne('cafapp\Models\Clienti','idAnagrafica');
+    }
+
+    public function luogo_nascita() {
+        return $this->belongsTo('cafapp\Models\Comuni','luogoNascita');
+    }
+
+    public function comune_residenza() {
+        return $this->belongsTo('cafapp\Models\Comuni','comuneResidenza');
+    }
+
 }
