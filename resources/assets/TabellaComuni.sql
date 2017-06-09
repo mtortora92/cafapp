@@ -19,16 +19,9 @@
 -- Table structure for table `Comuni`
 --
 
-DROP TABLE IF EXISTS `Comuni`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Comuni` (
-  `id` int(11) NOT NULL,
-  `comune` varchar(255) DEFAULT NULL,
-  `regione` varchar(50) DEFAULT NULL,
-  `provincia` varchar(2) DEFAULT NULL,
-  `cap` char(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
