@@ -3,7 +3,9 @@
 namespace cafapp\Http\Controllers;
 
 use cafapp\Models\Comuni;
+use cafapp\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class Select2AutocompleteController extends Controller
 {
@@ -39,5 +41,26 @@ class Select2AutocompleteController extends Controller
         }
 
         return response()->json($data);
+    }
+
+    public function registrazioneUtente(Request $request){
+        $data = $request->all();
+
+        $validatore = Validator::make($data, [
+            'nome' => 'required|string|max:255',
+            'cognome' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:users',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+
+         User::create([
+            'nome' => $data['nome'],
+            'cognome' => $data['cognome'],
+            'username' => $data['username'],
+            'password' => bcrypt($data['password']),
+            'idRuolo' => $data['role'],
+         ]);
+
+         return redirect('/gestione_utenti');
     }
 }

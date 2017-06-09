@@ -57,6 +57,7 @@ Route::resource('clienti', 'ClientiController');
 // Route per l'autenticazione built in di laravel
 
 Auth::routes();
+Route::post('/registrazione_utente','Select2AutocompleteController@registrazioneUtente');
 
 Route::get('/home', function () {
     return view('home');

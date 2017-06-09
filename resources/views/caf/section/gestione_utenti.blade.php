@@ -1,6 +1,6 @@
 @php
-    $utentiSupervisor = \cafapp\Models\User::where('idRuolo',1)->get();
-    $utentiNormali = \cafapp\Models\User::where('idRuolo',2)->get();
+    $utentiSupervisor = \cafapp\User::where('idRuolo',1)->get();
+    $utentiNormali = \cafapp\User::where('idRuolo',2)->get();
 @endphp
 
 @extends('caf.layout')
@@ -19,7 +19,7 @@
                         <p class="category">Tutti i campi sono obbligatori</p>
                     </div>
                     <div class="card-content">
-                        <form role="form" method="POST" action="{{ route('register') }}">
+                        <form role="form" method="POST" action="{{ url('/registrazione_utente') }}">
                             {{ csrf_field() }}
                             <div class="row">
                                 <div class="col-md-12">
