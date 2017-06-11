@@ -14,6 +14,6 @@ class DatabaseSeeder extends Seeder
 //        $this->call(RolesUserSeeder::class);
 //        $this->call(UserAdministratorSeeder::class);
 //        $this->call(TipologiaClienteSeeder::class);
-//        $this->call(ComuniSeeder::class);
+        $this->call(ComuniSeeder::class);
     }
 }

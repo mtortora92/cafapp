@@ -8,6 +8,11 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
+                <button onclick="location.href='{{url("/clienti/create")}}'" class="btn btn-primary">Inserisci Nuovo cliente</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
                 <div class="card card-plain">
                     <div class="card-header" data-background-color="purple">
                         <h4 class="title">Lista clienti</h4>

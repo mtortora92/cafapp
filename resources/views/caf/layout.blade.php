@@ -60,30 +60,16 @@
                 </li>
                 @if($connessoComeSupervisor)
                 <li @yield('activeGestioneUtentiSidebar')>
-                    <a href="/gestione_utenti">
-                        <i class="material-icons">person</i>
-                        <p>Gestione utenti</p>
+                    <a href="/account">
+                        <i class="material-icons">content_paste</i>
+                        <p>Amministrazione</p>
                     </a>
                 </li>
                 @endif
-                @if($connessoComeSupervisor)
-                    <li @yield('activeGestioneTendineSidebar')>
-                        <a href="/gestione_tendine">
-                            <i class="material-icons">person</i>
-                            <p>Gestione tendine</p>
-                        </a>
-                    </li>
-                @endif
-                <li @yield('activeInserisciClientiSidebar')>
-                    <a href="/clienti/create">
-                        <i class="material-icons">person</i>
-                        <p>Inserisci clienti</p>
-                    </a>
-                </li>
                 <li @yield('activeListaClientiSidebar')>
                     <a href="/clienti">
                         <i class="material-icons">person</i>
-                        <p>Lista clienti</p>
+                        <p>Clienti</p>
                     </a>
                 </li>
             </ul>
@@ -104,6 +90,7 @@
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
+                        <!--
                         <li>
                             <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="material-icons">dashboard</i>
@@ -124,6 +111,7 @@
                                 <li><a href="#">Another One</a></li>
                             </ul>
                         </li>
+                        -->
                         <li>
                             <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="material-icons">person</i>
@@ -139,7 +127,7 @@
                             </ul>
                         </li>
                     </ul>
-
+                    <!--
                     <form class="navbar-form navbar-right" role="search">
                         <div class="form-group  is-empty">
                             <input type="text" class="form-control" placeholder="Search">
@@ -149,6 +137,7 @@
                             <i class="material-icons">search</i><div class="ripple-container"></div>
                         </button>
                     </form>
+                    -->
                 </div>
             </div>
         </nav>

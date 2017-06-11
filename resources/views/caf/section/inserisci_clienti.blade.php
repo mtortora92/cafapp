@@ -111,7 +111,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Luogo di nascita</label>
-                                        <select id="luogoNascita" name="luogoNascita" class="form-control select-comuni"></select>
+                                        <select id="luogoNascita" name="luogoNascita" data-placeholder="Luogo di nascita" class="form-control select-comuni"></select>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -173,7 +173,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Comune di residenza</label>
-                                        <select id="comuneResidenza" name="comuneResidenza" class="form-control select-comuni"></select>
+                                        <select id="comuneResidenza" name="comuneResidenza" data-placeholder="Comune" class="form-control select-comuni"></select>
                                     </div>
                                 </div>
                             </div>
@@ -198,7 +198,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Rilasciato dal comune</label>
-                                        <select id="comuneDiRilascio" name="rilasciatoDa" class="form-control select-comuni"></select>
+                                        <select id="comuneDiRilascio" name="rilasciatoDa" data-placeholder="Rilasciato da" class="form-control select-comuni"></select>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -253,7 +253,7 @@
                                 </div>
                             </div>
 
-                            <input type="submit" class="btn btn-primary pull-right" value="Inserisci cliente">
+                            <input type="submit" class="btn btn-primary pull-right" value="Salva">
                             <div class="clearfix"></div>
                         </form>
                     </div>
@@ -263,7 +263,7 @@
     </div>
 @endsection
 
-@section('activeInserisciClientiSidebar')
+@section('activeListaClientiSidebar')
     class="active"
 @endsection
 
@@ -284,7 +284,6 @@
 
             $('.select-comuni').select2({
                 minlength: 3,
-                placeholder: 'Seleziona il comune',
                 ajax: {
                     url: '{{url('select2-autocomplete-ajax')}}',
                     dataType: 'json',

@@ -18,30 +18,32 @@ Route::get('select2-autocomplete-ajax', 'Select2AutocompleteController@getComuni
 // Schermata iniziale di login
 
 Route::get('/', function () {
-    return view('caf.index');
+    if (\Illuminate\Support\Facades\Auth::check()){
+        return redirect("/dashboard");
+    } else {
+        return view('caf.index');
+    }
 });
 
 /*
     Route della dashboard
  */
 Route::get('/dashboard', function(){
-    return view('caf.section.dashboard');
-});
-
-/*
-    Route della gestione utenti
- */
-Route::get('/gestione_utenti', function(){
-    return view('caf.section.gestione_utenti');
-});
+    if(Auth::check()){
+        if(Auth::user()->idRuolo==1){
+            $connessoComeSupervisor = true;
+        } else {
+            $connessoComeSupervisor = false;
+        }
+    }
+    return view('caf.section.dashboard',[
+        "connessoComeSupervisor" => $connessoComeSupervisor
+    ]);
+})->middleware('auth');
 
 /*
     Route della gestione menu a tendina
  */
-Route::get('/gestione_tendine', function(){
-    return view('caf.section.gestione_tendine');
-})->name('visualizzaGestioneTendine');
-
 Route::post('/inserisci_tipo_invalidita','GestioneTendineController@inserisciTipoInvalidita');
 Route::post('/inserisci_titolo_studio','GestioneTendineController@inserisciTitoloStudio');
 Route::post('/inserisci_tipo_professione','GestioneTendineController@inserisciTipoProfessione');
@@ -53,11 +55,16 @@ Route::get('/rimuovi_tipo_documento/{id}','GestioneTendineController@rimuoviTipo
 
 /* Route resource Clienti */
 Route::resource('clienti', 'ClientiController');
+/* Route resource Account */
+Route::resource('account', 'AccountController');
 
 // Route per l'autenticazione built in di laravel
 
 Auth::routes();
-Route::post('/registrazione_utente','Select2AutocompleteController@registrazioneUtente');
+
+
+
+/*---------------------------------TEMPLATE-------------------------------------*/
 
 Route::get('/home', function () {
     return view('home');
