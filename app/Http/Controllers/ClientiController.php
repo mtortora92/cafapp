@@ -24,7 +24,7 @@ class ClientiController extends Controller
      */
     public function index()
     {
-        $clienti = AnagraficheClienti::with('cliente')->get();
+        $clienti = AnagraficheClienti::getAnagraficheClienti();
 
         return view("caf.section.lista_clienti",[
             "clienti" => $clienti,

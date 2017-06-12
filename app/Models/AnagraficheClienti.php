@@ -27,6 +27,11 @@ class AnagraficheClienti extends Model
         'comuneResidenza'
     ];
 
+    public static function getAnagraficheClienti(){
+        return AnagraficheClienti::with('cliente')->get();
+    }
+
+
     protected $guarded = [];
 
     public function cliente() {
