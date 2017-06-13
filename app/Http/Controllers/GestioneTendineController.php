@@ -15,13 +15,13 @@ class GestioneTendineController extends Controller
             'invalidita' => $data['descrizione'],
         ]);
 
-        return redirect("/account");
+        return redirect("/caf");
     }
 
     public function rimuoviTipoInvalidita($id){
         TipoInvaliditum::find($id)->delete();
 
-        return redirect("/account");
+        return redirect("/caf");
     }
 
     public function inserisciTipoDocumento(Request $data){
@@ -29,13 +29,13 @@ class GestioneTendineController extends Controller
             'descrizione' => $data['descrizione'],
         ]);
 
-        return redirect("/account");
+        return redirect("/caf");
     }
 
     public function rimuoviTipoDocumento($id){
         TipiDocumentiIdentitum::find($id)->delete();
 
-        return redirect("/account");
+        return redirect("/caf");
     }
 
     public function inserisciTitoloStudio(Request $data){
@@ -43,13 +43,13 @@ class GestioneTendineController extends Controller
             'titolo' => $data['descrizione'],
         ]);
 
-        return redirect("/account");
+        return redirect("/caf");
     }
 
     public function rimuoviTitoloStudio($id){
         TitoloStudio::find($id)->delete();
 
-        return redirect("/account");
+        return redirect("/caf");
     }
 
     public function inserisciTipoProfessione(Request $data){
@@ -57,12 +57,12 @@ class GestioneTendineController extends Controller
             'professione' => $data['descrizione'],
         ]);
 
-        return redirect("/account");
+        return redirect("/caf");
     }
 
     public function rimuoviTipoProfessione($id){
         TipoProfessione::find($id)->delete();
 
-        return redirect("/account");
+        return redirect("/caf");
     }
 }

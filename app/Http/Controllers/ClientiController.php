@@ -5,6 +5,7 @@ namespace cafapp\Http\Controllers;
 use cafapp\Models\AltreInfoCliente;
 use cafapp\Models\AnagraficheClienti;
 use cafapp\Models\Clienti;
+use cafapp\Models\Comuni;
 use cafapp\Models\DocumentoIdentitum;
 use cafapp\Models\Invaliditum;
 use cafapp\Models\TipiDocumentiIdentitum;
@@ -13,6 +14,7 @@ use cafapp\Models\TipoProfessione;
 use cafapp\Models\TitoloStudio;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ClientiController extends Controller
@@ -24,7 +26,7 @@ class ClientiController extends Controller
      */
     public function index()
     {
-        $clienti = AnagraficheClienti::getAnagraficheClienti();
+        $clienti = Clienti::getClientiPerCaf(Auth::user()->caf_id);
 
         return view("caf.section.lista_clienti",[
             "clienti" => $clienti,
@@ -87,7 +89,7 @@ class ClientiController extends Controller
             $invalidita = Invaliditum::create($data);
             $documento = DocumentoIdentitum::create($data);
 
-            $cliente = Clienti::create(["idAnagrafica"=>$anagrafica->id,"idInvalidita"=>$invalidita->id,"idDocumentoIdentita"=>$documento->id,"idAltreInfo"=>$altro->id]);
+            $cliente = Clienti::create(["idAnagrafica"=>$anagrafica->id,"idInvalidita"=>$invalidita->id,"idDocumentoIdentita"=>$documento->id,"idAltreInfo"=>$altro->id,"caf_id" => Auth::user()->caf_id]);
 
             DB::commit();
             return redirect("clienti");
@@ -121,6 +123,7 @@ class ClientiController extends Controller
         $tipiDocumenti = TipiDocumentiIdentitum::all();
         $tipiProfessione = TipoProfessione::all();
         $titoliStudio = TitoloStudio::all();
+        $comuni = Comuni::all();
         $cliente = Clienti::with('documento_identita','invalidita','anagrafica','altre_info')->find($id);
 
         return view("caf.section.modifica_clienti",[
@@ -128,7 +131,8 @@ class ClientiController extends Controller
             "tipiInvalidita" => $tipiInvalidita,
             "tipiDocumenti" => $tipiDocumenti,
             "tipiProfessione" => $tipiProfessione,
-            "titoliStudio" => $titoliStudio
+            "titoliStudio" => $titoliStudio,
+            "comuni" => $comuni
         ]);
     }
 

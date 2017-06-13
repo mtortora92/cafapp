@@ -12,8 +12,8 @@ class TipologiaClienteSeeder extends Seeder
     public function run()
     {
         DB::table('TipologiaCliente')->insert(array(
-            array('descrizione'=>'Persona Fisica'),
-            array('descrizione'=>'Persona Giuridica'),
+            array('id'=>'1','descrizione'=>'Persona Fisica'),
+            array('id'=>'2','descrizione'=>'Persona Giuridica'),
         ));
     }
 }

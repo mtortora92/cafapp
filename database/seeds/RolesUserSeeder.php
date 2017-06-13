@@ -14,6 +14,7 @@ class RolesUserSeeder extends Seeder
         DB::table('RolesUser')->insert(array(
             array('id'=>1,'descrizione'=>'Supervisore'),
             array('id'=>2,'descrizione'=>'Operatore'),
+            array('id'=>3,'descrizione'=>'Super Admin'),
         ));
     }
 }

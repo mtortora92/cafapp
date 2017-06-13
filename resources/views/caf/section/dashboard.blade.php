@@ -8,7 +8,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-6 col-md-12 col-sm-12">
-                @if($connessoComeSupervisor)
+                @if(Auth::user()->isSupervisor() || Auth::user()->isSuperAdmin())
                 <div onclick="location.href='{{url('/account')}}'" style="cursor:pointer" class="card card-stats">
                 @else
                 <div onclick="window.alert('Solo gli utenti supervisori possono accedere alla sezione')" class="card card-stats">

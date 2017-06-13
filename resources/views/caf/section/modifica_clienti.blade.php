@@ -142,9 +142,14 @@
                                     </div>
                                 </div>
                                 <div class="col-md-4">
+
                                     <div class="form-group label-floating">
                                         <label class="control-label">Luogo di nascita</label>
-                                        <select id="luogoNascita" name="luogoNascita" data-placeholder="Luogo di nascita" class="form-control select-comuni"></select>
+                                        <select id="luogoNascita" name="luogoNascita" data-placeholder="Luogo di nascita" class="form-control select-comuni">
+                                            @if(isset($cliente->anagrafica->luogoNascita))
+                                                <option value="{{$cliente->anagrafica->luogo_nascita->id}}" selected>{{$cliente->anagrafica->luogo_nascita->comune}}</option>
+                                            @endif
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -172,7 +177,6 @@
                                     <div class="form-group">
                                         <label for="tipoDocumento">Invalidità:</label>
                                         <select class="form-control" id="invalidita" name="idInvalidita">
-                                            <option value="0">Nessuna</option>
                                             @foreach($tipiInvalidita as $item)
                                                 @if(isset($cliente->invalidita->idInvalidita) && $cliente->invalidita->idInvalidita == $item->id)
                                                     <option value="{{$item->id}}" selected>{{$item->invalidita}}</option>
@@ -205,16 +209,26 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-md-7">
+                                <div class="col-md-6">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Indirizzo</label>
                                         <input type="text" value="{{$cliente->anagrafica->indirizzoResidenza}}" name="indirizzoResidenza" class="form-control" >
                                     </div>
                                 </div>
+                                <div class="col-md-1">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Cap</label>
+                                        <input type="text" value="{{$cliente->anagrafica->capResidenza}}" maxlength="5" name="capResidenza" class="form-control" >
+                                    </div>
+                                </div>
                                 <div class="col-md-4">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Comune di residenza</label>
-                                        <select id="comuneResidenza" name="comuneResidenza" data-placeholder="Comune" value="{{$cliente->anagrafica->comuneResidenza}}" class="form-control select-comuni"></select>
+                                        <select id="comuneResidenza" name="comuneResidenza" data-placeholder="Comune" value="{{$cliente->anagrafica->comuneResidenza}}" class="form-control select-comuni">
+                                            @if(isset($cliente->anagrafica->comuneResidenza))
+                                                <option value="{{$cliente->anagrafica->comune_residenza->id}}" selected>{{$cliente->anagrafica->comune_residenza->comune}}</option>
+                                            @endif
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -247,7 +261,11 @@
                                 <div class="col-md-4">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Rilasciato dal comune</label>
-                                        <select id="comuneDiRilascio" name="rilasciatoDa" data-placeholder="Rilasciato da" value="{{$cliente->documento_identita->rilasciatoDa}}" class="form-control select-comuni"></select>
+                                        <select id="comuneDiRilascio" name="rilasciatoDa" data-placeholder="Rilasciato da" value="{{$cliente->documento_identita->rilasciatoDa}}" class="form-control select-comuni">
+                                            @if(isset($cliente->documento_identita->rilasciatoDa))
+                                                <option value="{{$cliente->documento_identita->rilasciato_da->id}}" selected>{{$cliente->documento_identita->rilasciato_da->comune}}</option>
+                                            @endif
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
@@ -371,6 +389,14 @@
                     'nome':{
                         required: true,
                     },
+                    'codiceFiscale':{
+                        required: true,
+                    },
+                    'capResidenza':{
+                        digits: true,
+                        minlength: 5,
+                        maxlength: 5,
+                    },
                     'dataNascita':{
                         dateITA: true,
                     },
@@ -379,6 +405,15 @@
                     },
                     'dataScadenza':{
                         dateITA: true,
+                    },
+                    'telefono':{
+                        number: true,
+                    },
+                    'cellulare':{
+                        number: true,
+                    },
+                    'email':{
+                        email: true,
                     },
                 },
                 messages: {
@@ -388,6 +423,14 @@
                     'nome':{
                         required: "Il nome è obbligatorio"
                     },
+                    'codiceFiscale':{
+                        required: "Il codice fiscale è obbligatorio"
+                    },
+                    'capResidenza':{
+                        digits: "5 cifre",
+                        minlength: "5 cifre",
+                        maxlength: "5 cifre",
+                    },
                     'dataNascita':{
                         dateITA: "Inserire data in formato corretto"
                     },
@@ -396,6 +439,15 @@
                     },
                     'dataScadenza':{
                         dateITA: "Inserire data in formato corretto"
+                    },
+                    'telefono':{
+                        number: "Inserire numero",
+                    },
+                    'cellulare':{
+                        number: "Inserire numero",
+                    },
+                    'email':{
+                        email: "Inserire mail valida",
                     }
                 }
             });

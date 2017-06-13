@@ -19,6 +19,7 @@ class CreateClientiTable extends Migration {
 			$table->integer('idInvalidita')->unsigned()->index('fk_Clienti_Invalidita1_idx');
 			$table->integer('idDocumentoIdentita')->unsigned()->index('fk_Clienti_DocumentoIdentita1_idx');
 			$table->integer('idAltreInfo')->unsigned()->index('fk_Clienti_AltreInfoCliente1_idx');
+			$table->integer('caf_id')->index('fk_Clienti_caf1_idx');
 		});
 	}
 

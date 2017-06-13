@@ -1,12 +1,3 @@
-@php
-    if(Auth::check()){
-        if(Auth::user()->idRuolo==1){
-            $connessoComeSupervisor = true;
-        } else {
-            $connessoComeSupervisor = false;
-        }
-    }
-@endphp
 <!doctype html>
 <html lang="it">
 <head>
@@ -25,6 +16,7 @@
 
     <!--  Material Dashboard CSS    -->
     <link href="{{URL::asset('assets/css/material-dashboard.css')}}" rel="stylesheet"/>
+    <link href="{{URL::asset('assets/css/demo.css')}}" rel="stylesheet"/>
 
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
@@ -58,7 +50,7 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
-                @if($connessoComeSupervisor)
+                @if(Auth::user()->isSupervisor() || Auth::user()->isSuperAdmin())
                 <li @yield('activeGestioneUtentiSidebar')>
                     <a href="/account">
                         <i class="material-icons">content_paste</i>
@@ -68,10 +60,18 @@
                 @endif
                 <li @yield('activeListaClientiSidebar')>
                     <a href="/clienti">
-                        <i class="material-icons">person</i>
+                        <i class="material-icons text-gray">person</i>
                         <p>Clienti</p>
                     </a>
                 </li>
+                @if(Auth::user()->isSuperAdmin())
+                <li class="active-pro">
+                    <a href="/caf">
+                        <i class="material-icons">unarchive</i>
+                        <p>Gestione Caf</p>
+                    </a>
+                </li>
+                @endif
             </ul>
         </div>
     </div>

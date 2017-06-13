@@ -164,10 +164,16 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-md-7">
+                                <div class="col-md-6">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Indirizzo</label>
                                         <input type="text" name="indirizzoResidenza" class="form-control" >
+                                    </div>
+                                </div>
+                                <div class="col-md-1">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Cap</label>
+                                        <input type="text" maxlength="5" name="capResidenza" class="form-control" >
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -310,6 +316,14 @@
                     'nome':{
                         required: true,
                     },
+                    'codiceFiscale':{
+                        required: true,
+                    },
+                    'capResidenza':{
+                        digits: true,
+                        minlength: 5,
+                        maxlength: 5,
+                    },
                     'dataNascita':{
                         dateITA: true,
                     },
@@ -318,6 +332,15 @@
                     },
                     'dataScadenza':{
                         dateITA: true,
+                    },
+                    'telefono':{
+                        number: true,
+                    },
+                    'cellulare':{
+                        number: true,
+                    },
+                    'email':{
+                        email: true,
                     },
                 },
                 messages: {
@@ -327,6 +350,14 @@
                     'nome':{
                         required: "Il nome è obbligatorio"
                     },
+                    'codiceFiscale':{
+                        required: "Il codice fiscale è obbligatorio"
+                    },
+                    'capResidenza':{
+                        digits: "5 cifre",
+                        minlength: "5 cifre",
+                        maxlength: "5 cifre",
+                    },
                     'dataNascita':{
                         dateITA: "Inserire data in formato corretto"
                     },
@@ -335,6 +366,15 @@
                     },
                     'dataScadenza':{
                         dateITA: "Inserire data in formato corretto"
+                    },
+                    'telefono':{
+                        number: "Inserire numero",
+                    },
+                    'cellulare':{
+                        number: "Inserire numero",
+                    },
+                    'email':{
+                        email: "Inserire mail valida",
                     }
                 }
             });

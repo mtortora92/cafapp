@@ -2,13 +2,10 @@
 
 namespace cafapp\Http\Controllers;
 
-use cafapp\Http\Requests\UserValidator;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use cafapp\User;
+use Illuminate\Support\Facades\Auth;
 
-class AccountController extends Controller
+class DashboardController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,13 +14,7 @@ class AccountController extends Controller
      */
     public function index()
     {
-        $utentiSupervisor = User::getUtentiSupervisorPerCaf(Auth::user()->caf_id);
-        $utentiNormali = User::getUtentiNormaliPerCaf(Auth::user()->caf_id);
-
-        return view('caf.section.gestione_utenti',[
-            "utentiNormali" => $utentiNormali,
-            "utentiSupervisor" => $utentiSupervisor,
-        ]);
+        return view('caf.section.dashboard');
     }
 
     /**
@@ -39,27 +30,12 @@ class AccountController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param UserValidator $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
-    public function store(UserValidator $request)
+    public function store(Request $request)
     {
-        $data = $request->all();
-
-        /*
-        $validatore = Validator::make($data, [
-            'nome' => 'required|string|max:255',
-            'cognome' => 'required|string|max:255',
-            'username' => 'required|string|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
-        */
-
-        $data["caf_id"] = Auth::user()->caf_id;
-
-        User::insertUser($data);
-
-        return redirect('/account');
+        //
     }
 
     /**
@@ -104,7 +80,6 @@ class AccountController extends Controller
      */
     public function destroy($id)
     {
-        User::find($id)->delete();
-        return redirect('/account');
+        //
     }
 }

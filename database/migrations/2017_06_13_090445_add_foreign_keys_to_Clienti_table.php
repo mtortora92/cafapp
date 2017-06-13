@@ -18,6 +18,7 @@ class AddForeignKeysToClientiTable extends Migration {
 			$table->foreign('idAnagrafica', 'fk_Clienti_AnagraficheClienti1')->references('id')->on('AnagraficheClienti')->onUpdate('NO ACTION')->onDelete('NO ACTION');
 			$table->foreign('idDocumentoIdentita', 'fk_Clienti_DocumentoIdentita1')->references('id')->on('DocumentoIdentita')->onUpdate('NO ACTION')->onDelete('NO ACTION');
 			$table->foreign('idInvalidita', 'fk_Clienti_Invalidita1')->references('id')->on('Invalidita')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+			$table->foreign('caf_id', 'fk_Clienti_caf1')->references('id')->on('caf')->onUpdate('NO ACTION')->onDelete('NO ACTION');
 		});
 	}
 
@@ -35,6 +36,7 @@ class AddForeignKeysToClientiTable extends Migration {
 			$table->dropForeign('fk_Clienti_AnagraficheClienti1');
 			$table->dropForeign('fk_Clienti_DocumentoIdentita1');
 			$table->dropForeign('fk_Clienti_Invalidita1');
+			$table->dropForeign('fk_Clienti_caf1');
 		});
 	}
 

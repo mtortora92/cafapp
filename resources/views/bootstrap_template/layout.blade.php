@@ -82,7 +82,7 @@
                 </li>
                 <li @yield('activeNotificationsSidebar')>
                     <a href="/template/notifications">
-                        <i class="material-icons text-gray">notifications</i>
+                        <i class="material-icons">notifications</i>
                         <p>Notifications</p>
                     </a>
                 </li>

@@ -22,5 +22,8 @@ class DocumentoIdentitum extends Model
 
     protected $guarded = [];
 
+    public function rilasciato_da() {
+        return $this->belongsTo('cafapp\Models\Comuni','rilasciatoDa');
+    }
         
 }

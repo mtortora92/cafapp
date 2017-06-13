@@ -29,18 +29,18 @@
                             </thead>
                             <tbody>
                             @foreach($clienti as $cliente)
-                                @php($id = $cliente->cliente->id)
+                                @php($id = $cliente->id)
                                 <tr>
-                                    <td>{{$cliente->cognome}}</td>
-                                    <td>{{$cliente->nome}}</td>
+                                    <td>{{$cliente->anagrafica->cognome}}</td>
+                                    <td>{{$cliente->anagrafica->nome}}</td>
                                     <td>
-                                        @if(isset($cliente->dataNascita))
-                                        {{str_replace('-', '/', date('d-m-Y', strtotime($cliente->dataNascita)))}}
+                                        @if(isset($cliente->anagrafica->dataNascita))
+                                        {{str_replace('-', '/', date('d-m-Y', strtotime($cliente->anagrafica->dataNascita)))}}
                                         @endif
                                     </td>
                                     <td>
-                                        @if(isset($cliente->luogo_nascita->comune))
-                                        {{$cliente->luogo_nascita->comune}}
+                                        @if(isset($cliente->anagrafica->luogo_nascita->comune))
+                                        {{$cliente->anagrafica->luogo_nascita->comune}}
                                         @endif
                                     </td>
                                     <td>

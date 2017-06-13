@@ -24,11 +24,13 @@ class AnagraficheClienti extends Model
         'partitaIva',
         'pinInps',
         'indirizzoResidenza',
-        'comuneResidenza'
+        'comuneResidenza',
+        'capResidenza'
     ];
 
-    public static function getAnagraficheClienti(){
-        return AnagraficheClienti::with('cliente')->get();
+    public static function getAnagraficheClientiPerCaf($idCaf){
+        $clienti = Clienti::where('cliente.caf_id',$idCaf);
+        return AnagraficheClienti::with('cliente')->where('cliente.caf_id',$idCaf)->get();
     }
 
 

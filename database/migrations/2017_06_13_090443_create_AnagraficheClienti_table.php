@@ -26,6 +26,7 @@ class CreateAnagraficheClientiTable extends Migration {
 			$table->string('pinInps')->default('');
 			$table->string('indirizzoResidenza')->default('');
 			$table->integer('comuneResidenza')->nullable()->index('fk_AnagraficheClienti_Comuni2_idx');
+            $table->string('capResidenza')->default('');
 		});
 	}
 

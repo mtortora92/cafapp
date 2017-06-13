@@ -11,35 +11,24 @@
 |
 */
 
-// Route Select2
-Route::get('select2-autocomplete', 'Select2AutocompleteController@layout');
-Route::get('select2-autocomplete-ajax', 'Select2AutocompleteController@getComuni');
-
 // Schermata iniziale di login
 
 Route::get('/', function () {
-    if (\Illuminate\Support\Facades\Auth::check()){
-        return redirect("/dashboard");
+    if (Auth::check()){
+        return redirect("dashboard");
     } else {
         return view('caf.index');
     }
 });
 
-/*
-    Route della dashboard
- */
-Route::get('/dashboard', function(){
-    if(Auth::check()){
-        if(Auth::user()->idRuolo==1){
-            $connessoComeSupervisor = true;
-        } else {
-            $connessoComeSupervisor = false;
-        }
-    }
-    return view('caf.section.dashboard',[
-        "connessoComeSupervisor" => $connessoComeSupervisor
-    ]);
-})->middleware('auth');
+/* Route resource Dashboard */
+Route::resource('dashboard', 'DashboardController');
+/* Route resource Clienti */
+Route::resource('clienti', 'ClientiController');
+/* Route resource Account */
+Route::resource('account', 'AccountController');
+/* Route resource Caf */
+Route::resource('caf', 'CafController');
 
 /*
     Route della gestione menu a tendina
@@ -53,10 +42,9 @@ Route::get('/rimuovi_titolo_studio/{id}','GestioneTendineController@rimuoviTitol
 Route::get('/rimuovi_tipo_professione/{id}','GestioneTendineController@rimuoviTipoProfessione');
 Route::get('/rimuovi_tipo_documento/{id}','GestioneTendineController@rimuoviTipoDocumento');
 
-/* Route resource Clienti */
-Route::resource('clienti', 'ClientiController');
-/* Route resource Account */
-Route::resource('account', 'AccountController');
+// Route Select2
+Route::get('select2-autocomplete', 'Select2AutocompleteController@layout');
+Route::get('select2-autocomplete-ajax', 'Select2AutocompleteController@getComuni');
 
 // Route per l'autenticazione built in di laravel
 
