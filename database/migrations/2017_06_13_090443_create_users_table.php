@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration {
 			$table->boolean('isValid')->default(1);
 			$table->string('remember_token', 100)->nullable();
 			$table->timestamps();
-			$table->integer('caf_id')->index('fk_users_caf1_idx');
+			$table->integer('caf_id')->unsigned()->index('fk_users_caf1_idx');
 		});
 	}
 

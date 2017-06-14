@@ -14,7 +14,7 @@ class CreateCafTable extends Migration {
 	{
 		Schema::create('caf', function(Blueprint $table)
 		{
-			$table->integer('id')->primary();
+			$table->increments('id');
 			$table->string('nome', 45)->nullable();
 		});
 	}
