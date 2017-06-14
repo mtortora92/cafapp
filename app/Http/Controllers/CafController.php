@@ -26,8 +26,10 @@ class CafController extends Controller
         $tipiDocumenti = TipiDocumentiIdentitum::all();
         $tipiProfessione = TipoProfessione::all();
         $titoliStudio = TitoloStudio::all();
+        $caf = Caf::all();
 
         return view('caf.section.gesione_caf',[
+            "caf" => $caf,
             "tipiInvalidita" => $tipiInvalidita,
             "tipiDocumenti" => $tipiDocumenti,
             "tipiProfessione" => $tipiProfessione,
