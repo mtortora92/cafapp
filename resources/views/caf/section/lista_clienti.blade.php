@@ -13,7 +13,7 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="card card-plain">
+                <div class="card">
                     <div class="card-header" data-background-color="purple">
                         <h4 class="title">Lista clienti</h4>
                         <p class="category"></p>
