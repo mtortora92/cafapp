@@ -74,3 +74,17 @@
 
     </div>
 </div>
+@section('functionJavascript')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#example').DataTable(
+                {"language": {
+                    "lengthMenu": "Numero di _MENU_ per pagina",
+                    "zeroRecords": "Nessun Risultato",
+                    "info": "Pagina _PAGE_ di _PAGES_",
+                    "infoEmpty": "Nessun cliente trovato",
+                    "infoFiltered": ""}
+                });
+            $('#example_filter > label > input').attr('class','form-control');
+        } );
+    </script>@endsection
