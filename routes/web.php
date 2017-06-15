@@ -29,7 +29,8 @@ Route::resource('clienti', 'ClientiController');
 Route::resource('account', 'AccountController');
 /* Route resource Caf */
 Route::resource('caf', 'CafController');
-
+/* Route resource Diario */
+Route::resource('diario','DiarioController');
 /*
     Route della gestione menu a tendina
  */

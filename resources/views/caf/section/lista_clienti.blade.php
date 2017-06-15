@@ -19,7 +19,7 @@
                         <p class="category"></p>
                     </div>
                     <div class="card-content table-responsive">
-                        <table class="table table-hover">
+                        <table id="example" class="table table-hover">
                             <thead>
                             <th>Cognome</th>
                             <th>Nome</th>
@@ -47,6 +47,9 @@
                                         <button onclick="location.href='{{url("/clienti/$id/edit")}}'" type="button" rel="tooltip" title="Modifica" class="btn btn-primary btn-simple btn-xs">
                                             <i class="material-icons">edit</i>
                                         </button>
+                                        <button onclick="location.href='{{url("/diario/$id")}}'" rel="tooltip" title="Diario" class="btn btn-primary btn-simple btn-xs">
+                                            <i class="material-icons">perm_contact_calendar</i>
+                                        </button>
                                         <form method="post" action="{{url("/clienti/$id")}}" id="formEliminaCliente{{$id}}">
                                             {{csrf_field()}}
                                             {{ method_field('DELETE') }}
@@ -69,3 +72,17 @@
 @section('activeListaClientiSidebar')
     class="active"
 @endsection
+@section('functionJavascript')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#example').DataTable(
+                {"language": {
+                    "lengthMenu": "Numero di _MENU_ per pagina",
+                    "zeroRecords": "Nessun Risultato",
+                    "info": "Pagina _PAGE_ di _PAGES_",
+                    "infoEmpty": "Nessun cliente trovato",
+                    "infoFiltered": ""}
+                });
+            $('#example_filter > label > input').attr('class','form-control');
+        } );
+    </script>@endsection
