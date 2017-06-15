@@ -60,10 +60,10 @@ class CafController extends Controller
         $data["utente"]["password_confirmation"] = $data["passwordUtente_confirmation"];
 
         $userValidator = new UserValidator();
-        $validatore = Validator::make($data["utente"],$userValidator->rules());
+        $validatore = Validator::make($data["utente"],$userValidator->rules(),$userValidator->messages());
         if ($validatore->fails()) {
             return redirect('caf')
-                ->withErrors($validatore->messages())
+                ->withErrors($validatore)
                 ->withInput();
         }
 

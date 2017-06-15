@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class ClientiController extends Controller
 {
@@ -80,6 +81,13 @@ class ClientiController extends Controller
         }
         if($data["idInvalidita"] == 0){
             $data["idInvalidita"] = null;
+        }
+
+        $validatore = $this->controllaCodiceFiscale(["codiceFiscale" => $data["codiceFiscale"]]);
+        if(isset($validatore)){
+            return redirect('clienti/create')
+                ->withErrors($validatore)
+                ->withInput();
         }
 
         DB::beginTransaction();
@@ -166,6 +174,13 @@ class ClientiController extends Controller
             $data["idInvalidita"] = null;
         }
 
+        $validatore = $this->controllaCodiceFiscale(["codiceFiscale" => $data["codiceFiscale"]]);
+        if(isset($validatore)){
+            return redirect("clienti/$id/edit")
+                ->withErrors($validatore)
+                ->withInput();
+        }
+
         DB::beginTransaction();
         try{
             $cliente = Clienti::with('documento_identita','invalidita','anagrafica','altre_info')->find($id);
@@ -219,4 +234,18 @@ class ClientiController extends Controller
             return back();
         }
     }
+
+    private function controllaCodiceFiscale($codiceFiscale){
+        $rules = ['codiceFiscale' => 'unique:AnagraficheClienti'];
+        $messages = ['codiceFiscale.unique' => 'Codice Fiscale già esistente'];
+
+        $validatore = Validator::make($codiceFiscale, $rules, $messages);
+
+        if ($validatore->fails()) {
+            return $validatore;
+        } else {
+            return null;
+        }
+    }
+
 }

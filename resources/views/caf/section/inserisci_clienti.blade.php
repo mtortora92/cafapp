@@ -118,6 +118,11 @@
                                     <div class="form-group label-floating">
                                         <label class="control-label">Codice Fiscale</label>
                                         <input type="text" name="codiceFiscale" class="form-control">
+                                        @if ($errors->has("codiceFiscale"))
+                                            <span>
+                                                <strong>{{ $errors->first("codiceFiscale") }}</strong>
+                                            </span>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

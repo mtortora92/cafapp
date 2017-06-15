@@ -34,7 +34,6 @@
                                     <div class="form-group label-floating">
                                         <label class="control-label">Nome</label>
                                         <input type="text" name="utente[nome]" class="form-control" >
-
                                         @if ($errors->has("nome"))
                                             <span>
                                                 <strong>{{ $errors->first("nome") }}</strong>
