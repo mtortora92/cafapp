@@ -37,7 +37,7 @@
         -->
 
         <div class="logo">
-            <a href="http://www.creative-tim.com" class="simple-text">
+            <a href="" class="simple-text">
                 La galleria dei servizi
             </a>
         </div>
