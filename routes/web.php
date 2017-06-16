@@ -38,6 +38,9 @@ Route::post('/inserisci_tipo_invalidita','GestioneTendineController@inserisciTip
 Route::post('/inserisci_titolo_studio','GestioneTendineController@inserisciTitoloStudio');
 Route::post('/inserisci_tipo_professione','GestioneTendineController@inserisciTipoProfessione');
 Route::post('/inserisci_tipo_documento','GestioneTendineController@inserisciTipoDocumento');
+Route::post('inserisci_gruppo_servizi','GestioneTendineController@inserisciGruppoServizi');
+Route::post('inserisci_documento_servizi','GestioneTendineController@inserisciDocumentoServizi');
+
 Route::get('/rimuovi_tipo_invalidita/{id}','GestioneTendineController@rimuoviTipoInvalidita');
 Route::get('/rimuovi_titolo_studio/{id}','GestioneTendineController@rimuoviTitoloStudio');
 Route::get('/rimuovi_tipo_professione/{id}','GestioneTendineController@rimuoviTipoProfessione');

@@ -2,6 +2,8 @@
 
 namespace cafapp\Http\Controllers;
 
+use cafapp\Models\DocumentiServizi;
+use cafapp\Models\GruppiServizi;
 use cafapp\Models\TipiDocumentiIdentitum;
 use cafapp\Models\TipoInvaliditum;
 use cafapp\Models\TipoProfessione;
@@ -10,6 +12,23 @@ use Illuminate\Http\Request;
 
 class GestioneTendineController extends Controller
 {
+    public function inserisciGruppoServizi(Request $data){
+        GruppiServizi::create([
+            'nome' => $data["nome"]
+        ]);
+
+        return redirect('/caf');
+    }
+
+    public function inserisciDocumentoServizi(Request $data){
+        DocumentiServizi::create([
+            'nome' => $data["nome"],
+            'descrizione' => $data["descrizione"],
+        ]);
+
+        return redirect('/caf');
+    }
+
     public function inserisciTipoInvalidita(Request $data){
         TipoInvaliditum::create([
             'invalidita' => $data['descrizione'],

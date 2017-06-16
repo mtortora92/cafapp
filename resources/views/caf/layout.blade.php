@@ -177,5 +177,6 @@
 <!-- Material Dashboard DEMO methods, don't include it in your project! -->
 <script src="{{URL::asset('assets/js/demo.js')}}"></script>
 
+@yield('modal')
 @yield('functionJavascript')
 </html>

@@ -1,8 +1,8 @@
 @extends('caf.layout')
 
-@section('title', 'Gestione caf')
+@section('title', 'Super Admin')
 
-@section('titleSection', 'Gestione caf')
+@section('titleSection', 'Super Admin')
 
 @section('content')
     <div class="container-fluid">
@@ -49,7 +49,7 @@
                                 @include('caf.section.gestione_caf.menu_tendine')
                             </div>
                             <div class="tab-pane" id="menu_servizi">
-                                Ancora niente
+                                @include('caf.section.gestione_caf.menu_servizi')
                             </div>
                         </div>
                     </div>
@@ -57,6 +57,10 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('modal')
+    @include('caf.modal.modal_aggiungi_servizio')
 @endsection
 
 @section('functionJavascript')

@@ -4,6 +4,8 @@ namespace cafapp\Http\Controllers;
 
 use cafapp\Http\Requests\UserValidator;
 use cafapp\Models\Caf;
+use cafapp\Models\DocumentiServizi;
+use cafapp\Models\GruppiServizi;
 use cafapp\Models\TipiDocumentiIdentitum;
 use cafapp\Models\TipoInvaliditum;
 use cafapp\Models\TipoProfessione;
@@ -26,6 +28,8 @@ class CafController extends Controller
         $tipiDocumenti = TipiDocumentiIdentitum::all();
         $tipiProfessione = TipoProfessione::all();
         $titoliStudio = TitoloStudio::all();
+        $gruppoServizi = GruppiServizi::all();
+        $documentiServizi = DocumentiServizi::all();
         $caf = Caf::all();
 
         return view('caf.section.gesione_caf',[
@@ -34,6 +38,8 @@ class CafController extends Controller
             "tipiDocumenti" => $tipiDocumenti,
             "tipiProfessione" => $tipiProfessione,
             "titoliStudio" => $titoliStudio,
+            "gruppoServizi" => $gruppoServizi,
+            "documentiServizi" => $documentiServizi
         ]);
     }
 

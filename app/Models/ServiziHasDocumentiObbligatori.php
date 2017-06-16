@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace cafapp\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,6 +19,7 @@ class ServiziHasDocumentiObbligatori extends Model
      * @var string
      */
     protected $table = 'servizi_has_documenti_obbligatori';
+    public $timestamps = false;
 
     /**
      * @var array
@@ -30,7 +31,7 @@ class ServiziHasDocumentiObbligatori extends Model
      */
     public function servizi()
     {
-        return $this->belongsTo('App\Servizi');
+        return $this->belongsTo('cafapp\Models\Servizi');
     }
 
     /**
@@ -38,6 +39,6 @@ class ServiziHasDocumentiObbligatori extends Model
      */
     public function documentiServizi()
     {
-        return $this->belongsTo('App\DocumentiServizi');
+        return $this->belongsTo('cafapp\Models\DocumentiServizi');
     }
 }

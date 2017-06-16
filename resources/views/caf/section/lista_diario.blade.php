@@ -49,33 +49,10 @@
     </div>
 
 @endsection
-<!-- Modal Aggiungi Voce Diario -->
-<div id="modalAggiungiVoceDiario" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Inserisci Evento</h4>
-            </div>
-            <div class="modal-body">
-                <form id="formInserimentoEvento" method="post" action="{{url('/diario')}}">
-                    {{csrf_field()}}
-                    <div class="form-group label-floating">
-                    <label class="control-label">Descrizione</label>
-                    <textarea name="descrizione" class="form-control"></textarea>
-                </div>
-                    <input type="hidden" class="form-control" name="clienti_id" value="{{$clienteId}}"/>
 
-                    <input type="submit" class="btn btn-primary" value="Salva"/>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Annulla</button>
-            </div>
-        </div>
-
-    </div>
-</div>
+@section('modal')
+    @include('caf.modal.modal_voci_diario')
+@endsection
 
 @section('functionJavascript')
     <script type="text/javascript">
