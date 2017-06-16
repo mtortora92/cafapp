@@ -161,6 +161,12 @@
                                                 <strong>{{ $errors->first("codiceFiscale") }}</strong>
                                             </span>
                                         @endif
+                                        <!--
+                                            Questo campo hidden serve per confrontare verificare se il codice fiscale
+                                            viene modificato. Se viene modificato bisogna controllare che non sia stato
+                                            già inserito nel database.
+                                        -->
+                                        <input type="hidden" name="verificaCodiceFiscale" value="{{$cliente->anagrafica->codiceFiscale}}">
                                     </div>
                                 </div>
                             </div>
@@ -180,7 +186,7 @@
                                 </div>
                                 <div class="col-md-2 col-md-offset-1">
                                     <div class="form-group">
-                                        <label for="tipoDocumento">Invalidità:</label>
+                                        <label for="idInvalidita">Invalidità:</label>
                                         <select class="form-control" id="invalidita" name="idInvalidita">
                                             @foreach($tipiInvalidita as $item)
                                                 @if(isset($cliente->invalidita->idInvalidita) && $cliente->invalidita->idInvalidita == $item->id)

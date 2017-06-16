@@ -137,8 +137,7 @@
             <div class="col-lg-3 col-md-12">
                 <div class="card">
                     <div class="card-header" data-background-color="purple">
-                        <h4 class="title">Tipi invalidità</h4>
-                        <p class="category">Gestisci tipi di invalidità</p>
+                        <h5 class="title">Tipi invalidità</h5>
                     </div>
                     <div class="card-content table-responsive">
                         <form method="post" action="{{ url('/inserisci_tipo_invalidita') }}">
@@ -158,6 +157,7 @@
                             </thead>
                             <tbody>
                             @foreach($tipiInvalidita as $item)
+                                @if($item->id != 1)
                                 <tr>
                                     <td>{{$item->invalidita}}</td>
                                     <td class="td-actions text-right">
@@ -166,6 +166,7 @@
                                         </a>
                                     </td>
                                 </tr>
+                                @endif
                             @endforeach
                             </tbody>
                         </table>
@@ -176,8 +177,7 @@
             <div class="col-lg-3 col-md-12">
                 <div class="card">
                     <div class="card-header" data-background-color="purple">
-                        <h4 class="title">Tipi documenti di identità</h4>
-                        <p class="category">Gestisci tipologie documenti di identità</p>
+                        <h5 class="title">Documenti d'identità</h5>
                     </div>
                     <div class="card-content table-responsive">
                         <form method="post" action="{{ url('/inserisci_tipo_documento') }}">
@@ -197,6 +197,7 @@
                             </thead>
                             <tbody>
                             @foreach($tipiDocumenti as $item)
+                                @if($item->id != 1)
                                 <tr>
                                     <td>{{$item->descrizione}}</td>
                                     <td class="td-actions text-right">
@@ -205,6 +206,7 @@
                                         </a>
                                     </td>
                                 </tr>
+                                @endif
                             @endforeach
                             </tbody>
                         </table>
@@ -215,8 +217,7 @@
             <div class="col-lg-3 col-md-12">
                 <div class="card">
                     <div class="card-header" data-background-color="purple">
-                        <h4 class="title">Titoli di studio</h4>
-                        <p class="category">Gestisci titoli di studio</p>
+                        <h5 class="title">Titoli di studio</h5>
                     </div>
                     <div class="card-content table-responsive">
                         <form method="post" action="{{ url('/inserisci_titolo_studio') }}">
@@ -231,11 +232,12 @@
 
                         <table class="table">
                             <thead class="text-primary">
-                            <th>Tipi titoli di studio inseriti</th>
+                            <th>Titoli di studio inseriti</th>
                             <th></th>
                             </thead>
                             <tbody>
                             @foreach($titoliStudio as $item)
+                                @if($item->id != 1)
                                 <tr>
                                     <td>{{$item->titolo}}</td>
                                     <td class="td-actions text-right">
@@ -244,6 +246,7 @@
                                         </a>
                                     </td>
                                 </tr>
+                                @endif
                             @endforeach
                             </tbody>
                         </table>
@@ -253,8 +256,7 @@
             <div class="col-lg-3 col-md-12">
                 <div class="card">
                     <div class="card-header" data-background-color="purple">
-                        <h4 class="title">Tipi di professione</h4>
-                        <p class="category">Gestisci tipi di professione</p>
+                        <h5 class="title">Professioni</h5>
                     </div>
                     <div class="card-content table-responsive">
                         <form method="post" action="{{ url('/inserisci_tipo_professione') }}">
@@ -269,11 +271,12 @@
 
                         <table class="table">
                             <thead class="text-primary">
-                            <th>Tipi professione inseriti</th>
+                            <th>Professioni inserite</th>
                             <th></th>
                             </thead>
                             <tbody>
                             @foreach($tipiProfessione as $item)
+                                @if($item->id != 1)
                                 <tr>
                                     <td>{{$item->professione}}</td>
                                     <td class="td-actions text-right">
@@ -282,6 +285,7 @@
                                         </a>
                                     </td>
                                 </tr>
+                                @endif
                             @endforeach
                             </tbody>
                         </table>

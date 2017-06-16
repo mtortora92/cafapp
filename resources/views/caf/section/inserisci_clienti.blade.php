@@ -142,9 +142,8 @@
                                 </div>
                                 <div class="col-md-2 col-md-offset-1">
                                     <div class="form-group">
-                                        <label for="tipoDocumento">Invalidità:</label>
+                                        <label for="idInvalidita">Invalidità:</label>
                                         <select class="form-control" id="invalidita" name="idInvalidita">
-                                            <option value="0">Nessuna</option>
                                             @foreach($tipiInvalidita as $item)
                                                 <option value="{{$item->id}}">{{$item->invalidita}}</option>
                                             @endforeach

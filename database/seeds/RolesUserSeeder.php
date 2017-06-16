@@ -11,6 +11,7 @@ class RolesUserSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('RolesUser')->delete();
         DB::table('RolesUser')->insert(array(
             array('id'=>1,'descrizione'=>'Supervisore'),
             array('id'=>2,'descrizione'=>'Operatore'),

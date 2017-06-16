@@ -11,6 +11,7 @@ class TipologiaClienteSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('TipologiaCliente')->delete();
         DB::table('TipologiaCliente')->insert(array(
             array('id'=>'1','descrizione'=>'Persona Fisica'),
             array('id'=>'2','descrizione'=>'Persona Giuridica'),

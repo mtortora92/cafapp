@@ -174,11 +174,13 @@ class ClientiController extends Controller
             $data["idInvalidita"] = null;
         }
 
-        $validatore = $this->controllaCodiceFiscale(["codiceFiscale" => $data["codiceFiscale"]]);
-        if(isset($validatore)){
-            return redirect("clienti/$id/edit")
-                ->withErrors($validatore)
-                ->withInput();
+        if($data["codiceFiscale"] != $data["verificaCodiceFiscale"]) {
+            $validatore = $this->controllaCodiceFiscale(["codiceFiscale" => $data["codiceFiscale"]]);
+            if (isset($validatore)) {
+                return redirect("clienti/$id/edit")
+                    ->withErrors($validatore)
+                    ->withInput();
+            }
         }
 
         DB::beginTransaction();

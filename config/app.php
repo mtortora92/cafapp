@@ -182,6 +182,12 @@ return [
         // Providers migration generate
         Way\Generators\GeneratorsServiceProvider::class,
         Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider::class,
+
+        // Providers plugin krlove for generate models from database
+        Krlove\EloquentModelGenerator\Provider\GeneratorServiceProvider::class,
+
+        // Providers plugin generate seed
+        Orangehill\Iseed\IseedServiceProvider::class,
     ],
 
     /*

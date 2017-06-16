@@ -8,7 +8,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                <button data-toggle="modal" data-target="#myModal" class="btn btn-primary">Inserisci Evento</button>
+                <button data-toggle="modal" data-target="#modalAggiungiVoceDiario" class="btn btn-primary">Inserisci Evento</button>
             </div>
         </div>
             <div class="col-md-12">
@@ -29,13 +29,15 @@
                                 <tr>
                                     <td>{{$eventi->descrizione}}</td>
                                     <td>{{str_replace('-', '/', date('d-m-Y', strtotime($eventi->created_at)))}}</td>
-                                    <td><form method="post" action="{{url("/diario/$eventi->id")}}" id="formEliminaCliente{{$eventi->id}}">
+                                    <td>
+                                        <form method="post" action="{{url("/diario/$eventi->id")}}" id="formEliminaVoceDiario{{$eventi->id}}">
                                             {{csrf_field()}}
                                             {{ method_field('DELETE') }}
-                                            <button onclick="$('#formEliminaCliente{{$eventi->id}}').submit()" type="button" rel="tooltip" title="Elimina" class="btn btn-danger btn-simple btn-xs">
+                                            <button onclick="$('#formEliminaVoceDiario{{$eventi->id}}').submit()" type="button" rel="tooltip" title="Elimina" class="btn btn-danger btn-simple btn-xs">
                                                 <i class="material-icons">close</i>
                                             </button>
-                                        </form></td>
+                                        </form>
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -47,8 +49,8 @@
     </div>
 
 @endsection
-<!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
+<!-- Modal Aggiungi Voce Diario -->
+<div id="modalAggiungiVoceDiario" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -74,6 +76,7 @@
 
     </div>
 </div>
+
 @section('functionJavascript')
     <script type="text/javascript">
         $(document).ready(function() {
@@ -87,4 +90,5 @@
                 });
             $('#example_filter > label > input').attr('class','form-control');
         } );
-    </script>@endsection
+    </script>
+@endsection
