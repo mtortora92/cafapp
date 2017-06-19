@@ -2,7 +2,7 @@
 <div id="modalAggiungiVoceDiario" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="formInserimentoEvento" method="post" action="{{url('/diario')}}">
+            <form id="formInserimentoEvento" method="post" action="{{url('/diario')}}" onsubmit="controllaInserisciEvento()">
                 {{csrf_field()}}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -11,7 +11,7 @@
                 <div class="modal-body">
                     <div class="form-group label-floating">
                         <label class="control-label">Descrizione</label>
-                        <textarea name="descrizione" class="form-control"></textarea>
+                        <textarea id="descrizioneInserisciEvento" name="descrizione" class="form-control"></textarea>
                     </div>
                     <input type="hidden" class="form-control" name="clienti_id" value="{{$clienteId}}"/>
                 </div>

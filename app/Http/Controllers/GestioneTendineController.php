@@ -12,6 +12,20 @@ use Illuminate\Http\Request;
 
 class GestioneTendineController extends Controller
 {
+    public function index(){
+        $tipiInvalidita = TipoInvaliditum::all();
+        $tipiDocumenti = TipiDocumentiIdentitum::all();
+        $tipiProfessione = TipoProfessione::all();
+        $titoliStudio = TitoloStudio::all();
+
+        return view('caf.section.gestione_caf.menu_tendine',[
+            "tipiInvalidita" => $tipiInvalidita,
+            "tipiDocumenti" => $tipiDocumenti,
+            "tipiProfessione" => $tipiProfessione,
+            "titoliStudio" => $titoliStudio,
+        ]);
+    }
+
     public function inserisciGruppoServizi(Request $data){
         GruppiServizi::create([
             'nome' => $data["nome"]

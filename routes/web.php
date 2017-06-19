@@ -31,9 +31,14 @@ Route::resource('account', 'AccountController');
 Route::resource('caf', 'CafController');
 /* Route resource Diario */
 Route::resource('diario','DiarioController');
+/* Route resource Servizi */
+Route::resource('servizi','ServiziController');
+
 /*
     Route della gestione menu a tendina
  */
+Route::get('/tendine', 'GestioneTendineController@index');
+
 Route::post('/inserisci_tipo_invalidita','GestioneTendineController@inserisciTipoInvalidita');
 Route::post('/inserisci_titolo_studio','GestioneTendineController@inserisciTitoloStudio');
 Route::post('/inserisci_tipo_professione','GestioneTendineController@inserisciTipoProfessione');

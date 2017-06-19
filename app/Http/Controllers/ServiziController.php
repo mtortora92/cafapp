@@ -2,14 +2,14 @@
 
 namespace cafapp\Http\Controllers;
 
-use cafapp\Http\Requests\UserValidator;
-use cafapp\Models\Caf;
-use cafapp\User;
+use cafapp\Models\DocumentiServizi;
+use cafapp\Models\GruppiServizi;
+use cafapp\Models\Servizi;
+use cafapp\Models\ServiziHasDocumentiObbligatori;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
 
-class CafController extends Controller
+class ServiziController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,10 +18,15 @@ class CafController extends Controller
      */
     public function index()
     {
-        $caf = Caf::all();
 
-        return view('caf.section.gestione_caf.menu_caf',[
-            "caf" => $caf,
+        $gruppoServizi = GruppiServizi::all();
+        $documentiServizi = DocumentiServizi::all();
+        $servizi = Servizi::all();
+
+        return view('caf.section.gestione_caf.menu_servizi',[
+            "gruppoServizi" => $gruppoServizi,
+            "documentiServizi" => $documentiServizi,
+            "servizi" => $servizi
         ]);
     }
 
@@ -44,30 +49,26 @@ class CafController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $data["utente"]["password"] = $data["passwordUtente"];
-        $data["utente"]["password_confirmation"] = $data["passwordUtente_confirmation"];
-
-        $userValidator = new UserValidator();
-        $validatore = Validator::make($data["utente"],$userValidator->rules(),$userValidator->messages());
-        if ($validatore->fails()) {
-            return redirect('caf')
-                ->withErrors($validatore)
-                ->withInput();
-        }
 
         DB::beginTransaction();
         try{
-            $caf = Caf::create($data);
-            $data["utente"]["caf_id"] = $caf->id;
+            $servizio = Servizi::create($data);
 
-            User::insertUser($data["utente"]);
+            if(isset($data["documentiObbligatori"])) {
+                foreach ($data["documentiObbligatori"] as $doc) {
+                    ServiziHasDocumentiObbligatori::create([
+                        'servizi_id' => $servizio->id,
+                        'documenti_servizi_id' => $doc,
+                    ]);
+                }
+            }
 
             DB::commit();
-            return redirect("caf");
+            return redirect("servizi");
         } catch (\Exception $e){
             DB::rollBack();
             echo $e->getMessage();
-            return back()->with("socio_store_error","Attenzione: il salvataggio non è andato a buon fine. Riprova!");
+            // return back()->with("servizio_store_error","Attenzione: il salvataggio non è andato a buon fine. Riprova!");
         }
     }
 
@@ -113,6 +114,20 @@ class CafController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::beginTransaction();
+        try{
+            $servizio = Servizi::find($id);
+            $documenti = $servizio->serviziHasDocumentiObbligatoris();
+
+            $documenti->delete();
+            $servizio->delete();
+
+            DB::commit();
+            return redirect("servizi");
+        } catch (\Exception $e){
+            DB::rollBack();
+            echo $e->getMessage();
+            return back();
+        }
     }
 }
