@@ -21,11 +21,12 @@ class Ticket extends Model
      * @var string
      */
     protected $table = 'ticket';
+    public $timestamps = false;
 
     /**
      * @var array
      */
-    protected $fillable = ['clienti_id', 'servizi_id', 'sconto', 'data_chiusura'];
+    protected $fillable = ['clienti_id', 'servizi_id', 'sconto', 'data_chiusura', 'utente_per_lavorazione'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

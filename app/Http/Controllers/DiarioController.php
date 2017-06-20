@@ -2,6 +2,10 @@
 
 namespace cafapp\Http\Controllers;
 
+use cafapp\Models\Clienti;
+use cafapp\Models\GruppiServizi;
+use cafapp\Models\Servizi;
+use cafapp\Models\Ticket;
 use cafapp\Models\VociDiario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -57,11 +61,20 @@ class DiarioController extends Controller
      */
     public function show($id)
     {
-        //
+        // $id passato come parametro è l'id del cliente di cui si vuole mostrare il diario
+
         $diario = VociDiario::where('clienti_id','=',$id)->get();
+        $gruppoServizi = GruppiServizi::all();
+        $servizi = Servizi::where('gruppi_servizi_id',$gruppoServizi[0]->id)->get();
+        $ticketCliente = Ticket::where('clienti_id', $id)->get();
+        $cliente = Clienti::find($id);
+
         return view("caf.section.lista_diario",[
-            "clienteId" => $id,
-            "diario" => $diario
+            "cliente" => $cliente,
+            "diario" => $diario,
+            "gruppoServizi" => $gruppoServizi,
+            "servizi" => $servizi,
+            "tickets" => $ticketCliente
         ]);
     }
 
@@ -99,6 +112,7 @@ class DiarioController extends Controller
      */
     public function destroy($id)
     {
+        DB::beginTransaction();
         try{
             VociDiario::find($id)->delete();
             DB::commit();

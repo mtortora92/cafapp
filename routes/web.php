@@ -33,6 +33,11 @@ Route::resource('caf', 'CafController');
 Route::resource('diario','DiarioController');
 /* Route resource Servizi */
 Route::resource('servizi','ServiziController');
+/* Route resource Ticket */
+Route::resource('ticket','TicketController');
+Route::post('ticket/upload_documento','TicketController@uploadDocumento');
+Route::get('visualizza_documento/{idCliente}/{idDocumento}','TicketController@visualizeDocumento');
+Route::post('prendi_in_carico_lavorazione','TicketController@prendiInCarico');
 
 /*
     Route della gestione menu a tendina
@@ -54,6 +59,8 @@ Route::get('/rimuovi_tipo_documento/{id}','GestioneTendineController@rimuoviTipo
 // Route Select2
 Route::get('select2-autocomplete', 'Select2AutocompleteController@layout');
 Route::get('select2-autocomplete-ajax', 'Select2AutocompleteController@getComuni');
+
+Route::get('/ticket_select_servizi/{idGruppoServizio}', 'Select2AutocompleteController@ticketSelectServizi');
 
 // Route per l'autenticazione built in di laravel
 

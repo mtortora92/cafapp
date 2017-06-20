@@ -35,6 +35,10 @@ class Servizi extends Model
         return $this->belongsTo('cafapp\Models\GruppiServizi');
     }
 
+    public function getDocumentiObbligatori(){
+        return $this->belongsToMany(DocumentiServizi::class, 'servizi_has_documenti_obbligatori', 'servizi_id', 'documenti_servizi_id');
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

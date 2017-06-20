@@ -31,7 +31,7 @@ class GestioneTendineController extends Controller
             'nome' => $data["nome"]
         ]);
 
-        return redirect('/caf');
+        return redirect('/servizi');
     }
 
     public function inserisciDocumentoServizi(Request $data){
@@ -40,7 +40,7 @@ class GestioneTendineController extends Controller
             'descrizione' => $data["descrizione"],
         ]);
 
-        return redirect('/caf');
+        return redirect('/servizi');
     }
 
     public function inserisciTipoInvalidita(Request $data){
@@ -48,13 +48,13 @@ class GestioneTendineController extends Controller
             'invalidita' => $data['descrizione'],
         ]);
 
-        return redirect("/caf");
+        return redirect("/tendine");
     }
 
     public function rimuoviTipoInvalidita($id){
         TipoInvaliditum::find($id)->delete();
 
-        return redirect("/caf");
+        return redirect("/tendine");
     }
 
     public function inserisciTipoDocumento(Request $data){
@@ -62,13 +62,13 @@ class GestioneTendineController extends Controller
             'descrizione' => $data['descrizione'],
         ]);
 
-        return redirect("/caf");
+        return redirect("/tendine");
     }
 
     public function rimuoviTipoDocumento($id){
         TipiDocumentiIdentitum::find($id)->delete();
 
-        return redirect("/caf");
+        return redirect("/tendine");
     }
 
     public function inserisciTitoloStudio(Request $data){
@@ -76,13 +76,13 @@ class GestioneTendineController extends Controller
             'titolo' => $data['descrizione'],
         ]);
 
-        return redirect("/caf");
+        return redirect("/tendine");
     }
 
     public function rimuoviTitoloStudio($id){
         TitoloStudio::find($id)->delete();
 
-        return redirect("/caf");
+        return redirect("/tendine");
     }
 
     public function inserisciTipoProfessione(Request $data){
@@ -90,12 +90,12 @@ class GestioneTendineController extends Controller
             'professione' => $data['descrizione'],
         ]);
 
-        return redirect("/caf");
+        return redirect("/tendine");
     }
 
     public function rimuoviTipoProfessione($id){
         TipoProfessione::find($id)->delete();
 
-        return redirect("/caf");
+        return redirect("/tendine");
     }
 }

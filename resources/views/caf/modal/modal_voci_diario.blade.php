@@ -13,7 +13,7 @@
                         <label class="control-label">Descrizione</label>
                         <textarea id="descrizioneInserisciEvento" name="descrizione" class="form-control"></textarea>
                     </div>
-                    <input type="hidden" class="form-control" name="clienti_id" value="{{$clienteId}}"/>
+                    <input type="hidden" class="form-control" name="clienti_id" value="{{$cliente->id}}"/>
                 </div>
                 <div class="modal-footer">
                     <input type="submit" class="btn btn-primary" value="Salva"/>

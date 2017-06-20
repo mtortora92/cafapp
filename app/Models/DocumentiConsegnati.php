@@ -20,6 +20,7 @@ class DocumentiConsegnati extends Model
      * @var string
      */
     protected $table = 'documenti_consegnati';
+    public $timestamps = false;
 
     /**
      * @var array

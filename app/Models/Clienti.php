@@ -43,4 +43,8 @@ class Clienti extends Model
     public function altre_info() {
         return $this->belongsTo('cafapp\Models\AltreInfoCliente','idAltreInfo');
     }
+
+    public function documenti_consegnati (){
+        return $this->hasMany('cafapp\Models\DocumentiConsegnati','clienti_id');
+    }
 }
