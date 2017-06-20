@@ -3,6 +3,7 @@
 namespace cafapp\Http\Controllers;
 
 use cafapp\Models\DocumentiConsegnati;
+use cafapp\Models\ServiziHasDocumentiObbligatori;
 use cafapp\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -45,6 +46,15 @@ class TicketController extends Controller
 
         DB::beginTransaction();
         try{
+            $documentiObbligatori = ServiziHasDocumentiObbligatori::where('servizi_id', $data["servizi_id"])->get();
+
+            $data["stato_ticket_id"] = 1;
+            if(count($documentiObbligatori) == 0){
+                $data["stato_ticket_id"] = 2;  // Pronto per la lavorazione
+            } else {
+                $data["stato_ticket_id"] = 1;   // In attesa della documentazione
+            }
+
             Ticket::create($data);
             DB::commit();
             return redirect("diario/".$data['clienti_id']);

@@ -17,5 +17,6 @@ class DatabaseSeeder extends Seeder
         $this->call(TipologiaClienteSeeder::class);
         $this->call(MenuTendinaSeeder::class);
         $this->call(ComuniTableSeeder::class);
+        $this->call(StatoTicketSeeder::class);
     }
 }
