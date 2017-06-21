@@ -26,7 +26,6 @@ class Ticket extends Model
      * @var string
      */
     protected $table = 'ticket';
-    public $timestamps = false;
 
     /**
      * @var array
@@ -54,7 +53,7 @@ class Ticket extends Model
      */
     public function user()
     {
-        return $this->belongsTo('cafapp\Models\User', 'utente_per_lavorazione');
+        return $this->belongsTo('cafapp\User', 'utente_per_lavorazione');
     }
 
     /**

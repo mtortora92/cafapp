@@ -69,9 +69,11 @@
                                                             <td>{{$servizio->prezzo}}</td>
                                                             <td>{{$servizio->gruppiServizi->nome}}</td>
                                                             <td>
+                                                                <!--
                                                                 <button onclick="window.alert('Funzione ancora non disponibile')" type="button" rel="tooltip" title="Modifica" class="btn btn-primary btn-simple btn-xs">
                                                                     <i class="material-icons">edit</i>
                                                                 </button>
+                                                                -->
                                                                 <form method="post" action="{{url("servizi/$servizio->id")}}" id="formEliminaServizio{{$servizio->id}}">
                                                                     {{csrf_field()}}
                                                                     {{ method_field('DELETE') }}
@@ -233,16 +235,24 @@
 
     <script type="text/javascript">
         $(document).ready(function(){
-            $("#formInserimentoCaf").validate({
+            $("#formInserimentoServizio").validate({
                 rules: {
                     'nome':{
                         required: true,
                     },
+                    'prezzo':{
+                        required:true,
+                        number:true,
+                    }
                 },
                 messages: {
                     'nome':{
-                        required: "Il nome del Caf è obbligatorio"
+                        required: "Il nome del servizio è obbligatorio"
                     },
+                    'prezzo':{
+                        required:"Deve essere un numero",
+                        number:"Deve essere un numero",
+                    }
                 }
             });
         });

@@ -2,6 +2,7 @@
 
 namespace cafapp\Http\Controllers;
 
+use cafapp\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,7 +15,15 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('caf.section.dashboard');
+        $ticketDaPrendereInCarico = Ticket::where('stato_ticket_id',2)->where('utente_per_lavorazione',null)->orderBy('created_at')->get();
+        $ticketPresiInCaricoDaUtenteLoggato = Ticket::where('stato_ticket_id',2)->where('utente_per_lavorazione',Auth::user()->id)->orderBy('created_at')->get();
+        $ticketInAttesaDiDocumentazione = Ticket::where('stato_ticket_id', 1)->orderBy('created_at')->get();
+
+        return view('caf.section.dashboard',[
+            "ticketDaPrendereInCarico" => $ticketDaPrendereInCarico,
+            "ticketPresiInCaricoDaUtenteLoggato" => $ticketPresiInCaricoDaUtenteLoggato,
+            "ticketInAttesaDiDocumentazione" => $ticketInAttesaDiDocumentazione
+        ]);
     }
 
     /**

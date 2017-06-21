@@ -52,11 +52,11 @@
                                                 <h5 class="title">Tipi invalidità</h5>
                                             </div>
                                             <div class="card-content table-responsive">
-                                                <form method="post" action="{{ url('/inserisci_tipo_invalidita') }}">
+                                                <form id="form_invalidita" method="post" action="{{ url('/inserisci_tipo_invalidita') }}">
                                                     {{ csrf_field() }}
                                                     <div class="form-group label-floating">
                                                         <label class="control-label">Descrizione</label>
-                                                        <input type="text" name="descrizione" class="form-control" >
+                                                        <input type="text" name="descrizione" class="form-control">
                                                         <button type="submit" class="btn btn-primary btn-sm btn-round">Inserisci campo</button>
                                                         <div class="clearfix"></div>
                                                     </div>
@@ -92,7 +92,7 @@
                                                 <h5 class="title">Documenti d'identità</h5>
                                             </div>
                                             <div class="card-content table-responsive">
-                                                <form method="post" action="{{ url('/inserisci_tipo_documento') }}">
+                                                <form id="form_documenti" method="post" action="{{ url('/inserisci_tipo_documento') }}">
                                                     {{ csrf_field() }}
                                                     <div class="form-group label-floating">
                                                         <label class="control-label">Descrizione</label>
@@ -132,7 +132,7 @@
                                                 <h5 class="title">Titoli di studio</h5>
                                             </div>
                                             <div class="card-content table-responsive">
-                                                <form method="post" action="{{ url('/inserisci_titolo_studio') }}">
+                                                <form id="form_studio" method="post" action="{{ url('/inserisci_titolo_studio') }}">
                                                     {{ csrf_field() }}
                                                     <div class="form-group label-floating">
                                                         <label class="control-label">Descrizione</label>
@@ -171,7 +171,7 @@
                                                 <h5 class="title">Professioni</h5>
                                             </div>
                                             <div class="card-content table-responsive">
-                                                <form method="post" action="{{ url('/inserisci_tipo_professione') }}">
+                                                <form id="form_professioni" method="post" action="{{ url('/inserisci_tipo_professione') }}">
                                                     {{ csrf_field() }}
                                                     <div class="form-group label-floating">
                                                         <label class="control-label">Descrizione</label>
@@ -229,18 +229,23 @@
 
     <script type="text/javascript">
         $(document).ready(function(){
-            $("#formInserimentoCaf").validate({
+            var regoleValidate = {
                 rules: {
-                    'nome':{
+                    'descrizione':{
                         required: true,
                     },
                 },
                 messages: {
-                    'nome':{
-                        required: "Il nome del Caf è obbligatorio"
+                    'descrizione':{
+                        required: "Campo obbligatorio",
                     },
                 }
-            });
+            }
+
+            $("#form_invalidita").validate(regoleValidate);
+            $("#form_documenti").validate(regoleValidate);
+            $("#form_professioni").validate(regoleValidate);
+            $("#form_studio").validate(regoleValidate);
         });
     </script>
 @endsection

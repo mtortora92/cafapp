@@ -1,3 +1,32 @@
+<!-- Modal chiudi ticket -->
+<div id="modalChiudiTicket" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form  enctype="multipart/form-data" id="" method="post" action="{{url('chiudi_ticket')}}">
+                {{csrf_field()}}
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Chiudi ticket</h4>
+                </div>
+                <div class="modal-body">
+                    Stai per chiudere la lavorazione di questo ticket. Se non hai un documento da allegare clicca su SALVA, altrimenti clicca su ALLEGA
+                    <input type="hidden" name="id_ticket_in_modal_chiudi_ticket" id="id_ticket_in_modal_chiudi_ticket" value="">
+                    <input type="hidden" name="clienti_id" value="{{$cliente->id}}">
+                    <input name="documento_allegato_chiusura_ticket" onchange="this.form.submit()" style="display:none" type="file" id="allegaDocumentoChiusuraTicket">
+                    <br>
+                    <button onclick="$('#allegaDocumentoChiusuraTicket').click();" type="button" class="btn btn-primary">
+                        Allega
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" value="Salva"/>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annulla</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <!-- Modal Apri Tiket -->
 <div id="modalApriTicket" class="modal fade" role="dialog">
     <div class="modal-dialog">

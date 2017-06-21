@@ -37,7 +37,9 @@ Route::resource('servizi','ServiziController');
 Route::resource('ticket','TicketController');
 Route::post('ticket/upload_documento','TicketController@uploadDocumento');
 Route::get('visualizza_documento/{idCliente}/{idDocumento}','TicketController@visualizeDocumento');
+Route::get('visualizza_documento_output/{idCliente}/{idTicket}','TicketController@visualizeDocumentoOutput');
 Route::post('prendi_in_carico_lavorazione','TicketController@prendiInCarico');
+Route::post('chiudi_ticket','TicketController@chiudiTicket');
 
 /*
     Route della gestione menu a tendina

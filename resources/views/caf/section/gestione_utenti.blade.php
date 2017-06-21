@@ -155,6 +155,7 @@
                                                 <td>{{$utente->username}}</td>
                                                 <td><i class="fa fa-check"></i></td>
                                                 <td class="td-actions text-right">
+                                                    <!--
                                                     <form method="post" action="{{url("/account/$utente->id")}}" id="formEliminaAccount{{$utente->id}}">
                                                         {{csrf_field()}}
                                                         {{ method_field('DELETE') }}
@@ -162,6 +163,7 @@
                                                             <i class="material-icons">close</i>
                                                         </button>
                                                     </form>
+                                                    -->
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -172,6 +174,7 @@
                                                 <td>{{$utente->username}}</td>
                                                 <td></td>
                                                 <td class="td-actions text-right">
+                                                    <!--
                                                     <form method="post" action="{{url("/account/$utente->id")}}" id="formEliminaAccount{{$utente->id}}">
                                                         {{csrf_field()}}
                                                         {{ method_field('DELETE') }}
@@ -179,6 +182,7 @@
                                                             <i class="material-icons">close</i>
                                                         </button>
                                                     </form>
+                                                    -->
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -202,6 +206,7 @@
                                             <td>{{$utente->username}}</td>
                                             <td><i class="fa fa-check" aria-hidden="true"></i></td>
                                             <td class="td-actions text-right">
+                                                <!--
                                                 <form method="post" action="{{url("/account/$utente->id")}}" id="formEliminaAccount{{$utente->id}}">
                                                     {{csrf_field()}}
                                                     {{ method_field('DELETE') }}
@@ -209,6 +214,7 @@
                                                         <i class="material-icons">close</i>
                                                     </button>
                                                 </form>
+                                                -->
                                             </td>
                                         </tr>
                                     @endforeach
@@ -232,6 +238,7 @@
                                             <td>{{$utente->username}}</td>
                                             <td></td>
                                             <td class="td-actions text-right">
+                                                <!--
                                                 <form method="post" action="{{url("/account/$utente->id")}}" id="formEliminaAccount{{$utente->id}}">
                                                     {{csrf_field()}}
                                                     {{ method_field('DELETE') }}
@@ -239,6 +246,7 @@
                                                         <i class="material-icons">close</i>
                                                     </button>
                                                 </form>
+                                                -->
                                             </td>
                                         </tr>
                                     @endforeach

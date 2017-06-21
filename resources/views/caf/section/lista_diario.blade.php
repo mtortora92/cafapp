@@ -76,19 +76,20 @@
                                 <tr><td colspan="3">Nessun documento richiesto</td></tr>
                                 </tbody>
                             @else
-                                @php($documentazioneConsegnata = true)
                                 @foreach($documentiObbligatori as $documentoObb)
                                     <tbody>
                                     <tr>
                                         <td>{{$documentoObb->nome}}</td>
                                         <td>{{$documentoObb->descrizione}}</td>
                                         <td>
-                                            <form method="post" enctype="multipart/form-data" style="display:inline" action="{{url('/ticket/upload_documento')}}">
+                                            <form method="post" id="formUploadDoc{{$ticket->id}}{{$documentoObb->id}}" enctype="multipart/form-data" style="display:inline" action="{{url('/ticket/upload_documento')}}">
                                                 {{csrf_field()}}
                                                 <input type="hidden" name="documenti_servizi_id" value="{{$documentoObb->id}}">
                                                 <input type="hidden" name="clienti_id" value="{{$cliente->id}}">
-                                                <input name="documento_allegato" onchange="this.form.submit()" style="display:none" type="file" id="documentoObb{{$documentoObb->id}}">
-                                                <button onclick="$('#documentoObb{{$documentoObb->id}}').click();" type="button" rel="tooltip" title="Allega documento" class="btn btn-simple">
+                                                <input type="hidden" name="servizio_id" value="{{$ticket->servizi_id}}">
+                                                <input type="hidden" name="ticket_id" value="{{$ticket->id}}">
+                                                <input name="documento_allegato" onchange="$('#formUploadDoc{{$ticket->id}}{{$documentoObb->id}}').submit()" style="display:none" type="file" id="documentoObb{{$ticket->id}}{{$documentoObb->id}}">
+                                                <button onclick="$('#documentoObb{{$ticket->id}}{{$documentoObb->id}}').click();" type="button" rel="tooltip" title="Allega documento" class="btn btn-simple">
                                                     <i class="material-icons">attach_file</i>
                                                 </button>
                                             </form>
@@ -97,16 +98,9 @@
                                                 <button type="button" rel="tooltip" title="Visualizza documento" class="btn btn-simple">
                                                     <a target="_blank" href="{{url("visualizza_documento/$cliente->id/$documentoObb->id")}}"><i class="material-icons">visibility</i></a>
                                                 </button>
-                                                <button onclick="window.alert('Funzione ancora non disponibile')" type="button" rel="tooltip" title="Rimuovi Documento" class="btn btn-danger btn-simple btn-xs">
-                                                    <i class="material-icons">close</i>
-                                                </button>
                                             @else
-                                                @php($documentazioneConsegnata = false)
                                                 <button onclick="window.alert('Allegare documento per visualizzarlo')" type="button" rel="tooltip" title="Documento non allegato" class="btn btn-simple">
                                                     <a><i class="material-icons">visibility_off</i></a>
-                                                </button>
-                                                <button onclick="window.alert('Nessun documento da rimuovere')" type="button" rel="tooltip" title="Rimuovi Documento" class="btn btn-danger btn-simple btn-xs">
-                                                    <i class="material-icons">close</i>
                                                 </button>
                                             @endif
                                         </td>
@@ -115,13 +109,44 @@
                                 @endforeach
                             @endif
                         </table>
-                        @if($documentazioneConsegnata)
+                        @if($ticket->stato_ticket_id == 2 && !isset($ticket->utente_per_lavorazione))
                             <form method="post" enctype="multipart/form-data" style="display:inline" action="{{url('prendi_in_carico_lavorazione')}}">
                                 {{csrf_field()}}
                                 <input type="hidden" name="cliente_id" value="{{$cliente->id}}">
                                 <input type="hidden" name="ticket_id" value="{{$ticket->id}}">
                                 <input type="submit" class="btn btn-primary" value="Procedi alla lavorazione">
                             </form>
+                        @elseif($ticket->stato_ticket_id == 2 && isset($ticket->utente_per_lavorazione))
+                            @if($ticket->utente_per_lavorazione != Auth::user()->id)
+                                <p class="text-primary">
+                                    La lavorazione è stata già presa in carico dall'utente {{$ticket->user->nome}} {{$ticket->user->cognome}}
+                                </p>
+                            @else
+                                <button onclick="$('.modal-body #id_ticket_in_modal_chiudi_ticket').val('{{$ticket->id}}')" data-toggle="modal" data-target="#modalChiudiTicket" class="btn btn-primary">Chiudi il Ticket</button>
+                            @endif
+                        @elseif($ticket->stato_ticket_id == 3)
+                            <p class="text-primary">
+                                La lavorazione è stata completata dall'utente {{$ticket->user->nome}} {{$ticket->user->cognome}}
+                                <form method="post" enctype="multipart/form-data" style="display:inline" action="{{url('chiudi_ticket')}}">
+                                    {{csrf_field()}}
+                                    <input type="hidden" name="id_ticket_in_modal_chiudi_ticket" value="{{$ticket->id}}">
+                                    <input type="hidden" name="clienti_id" value="{{$cliente->id}}">
+                                    <input name="documento_allegato_chiusura_ticket" onchange="this.form.submit()" style="display:none" type="file" id="documentoOutput{{$ticket->id}}">
+                                    <button onclick="$('#documentoOutput{{$ticket->id}}').click();" type="button" rel="tooltip" title="Allega documento per cliente" class="btn btn-simple">
+                                        <i class="material-icons">attach_file</i>
+                                    </button>
+                                </form>
+                                @php($documentoOutputPresenza = \cafapp\Models\DocumentiOutput::where('ticket_id',$ticket->id)->first())
+                                @if(isset($documentoOutputPresenza))
+                                    <button type="button" rel="tooltip" title="Visualizza documento del cliente" class="btn btn-simple">
+                                        <a target="_blank" href="{{url("visualizza_documento_output/$cliente->id/$ticket->id")}}"><i class="material-icons">visibility</i></a>
+                                    </button>
+                                @else
+                                    <button onclick="window.alert('Allegare documento per visualizzarlo')" type="button" rel="tooltip" title="Documento non allegato" class="btn btn-simple btn-success">
+                                        <a><i class="material-icons success">visibility_off</i></a>
+                                    </button>
+                                @endif
+                            </p>
                         @endif
                     </div>
                 </div>

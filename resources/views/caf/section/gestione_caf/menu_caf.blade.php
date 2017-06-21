@@ -154,6 +154,7 @@
                                                             <td>{{$caf->id}}</td>
                                                             <td>{{$caf->nome}}</td>
                                                             <td>
+                                                                <!--
                                                                 <form method="post" action="" id="formEliminaCaf{{$id}}">
                                                                     {{csrf_field()}}
                                                                     {{ method_field('DELETE') }}
@@ -161,6 +162,7 @@
                                                                         <i class="material-icons">close</i>
                                                                     </button>
                                                                 </form>
+                                                                -->
                                                             </td>
                                                         </tr>
                                                     @endforeach

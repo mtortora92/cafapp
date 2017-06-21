@@ -8,6 +8,7 @@ use cafapp\Models\Servizi;
 use cafapp\Models\Ticket;
 use cafapp\Models\VociDiario;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class DiarioController extends Controller
