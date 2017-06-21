@@ -29,7 +29,7 @@
 <div id="modalAggiungiDocumento" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="formInserisciGruppoServizio" method="post" action="{{url('/inserisci_documento_servizi')}}">
+            <form id="formInserisciServizio" method="post" action="{{url('/inserisci_documento_servizi')}}">
                 {{csrf_field()}}
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -53,3 +53,28 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        var regoleValidate = {
+            rules: {
+                'nome': {
+                    required:true,
+                },
+                'descrizione':{
+                    required: true,
+                },
+            },
+            messages: {
+                'nome':{
+                    required: "Nome obbligatorio",
+                },
+                'descrizione':{
+                    required: "Descrizione obbligatoria",
+                },
+            }
+        };
+
+        $("#formInserisciGruppoServizio").validate(regoleValidate);
+        $("#formInserisciServizio").validate(regoleValidate);
+    });
+</script>

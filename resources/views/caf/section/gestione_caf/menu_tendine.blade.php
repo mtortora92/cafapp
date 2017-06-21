@@ -73,9 +73,13 @@
                                                             <tr>
                                                                 <td>{{$item->invalidita}}</td>
                                                                 <td class="td-actions text-right">
-                                                                    <a href="{{url("/rimuovi_tipo_invalidita/$item->id")}}" type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                                        <i class="material-icons">close</i>
-                                                                    </a>
+                                                                    <form method="post" id="formEliminaInvalidita{{$item->id}}" action="{{url('rimuovi_tipo_invalidita')}}">
+                                                                        {{csrf_field()}}
+                                                                        <input type="hidden" name="idTipoInvalidita" value="{{$item->id}}">
+                                                                        <button onclick="$('#formEliminaInvalidita{{$item->id}}').submit()" type="button" rel="tooltip" title="Elimina" class="btn btn-danger btn-simple btn-xs">
+                                                                            <i class="material-icons">close</i>
+                                                                        </button>
+                                                                    </form>
                                                                 </td>
                                                             </tr>
                                                         @endif
@@ -113,9 +117,13 @@
                                                             <tr>
                                                                 <td>{{$item->descrizione}}</td>
                                                                 <td class="td-actions text-right">
-                                                                    <a href="{{url("/rimuovi_tipo_documento/$item->id")}}" type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                                        <i class="material-icons">close</i>
-                                                                    </a>
+                                                                    <form method="post" id="formEliminaDocumenti{{$item->id}}" action="{{url('rimuovi_tipo_documento')}}">
+                                                                        {{csrf_field()}}
+                                                                        <input type="hidden" name="idTipoDocumento" value="{{$item->id}}">
+                                                                        <button onclick="$('#formEliminaDocumenti{{$item->id}}').submit()" type="button" rel="tooltip" title="Elimina" class="btn btn-danger btn-simple btn-xs">
+                                                                            <i class="material-icons">close</i>
+                                                                        </button>
+                                                                    </form>
                                                                 </td>
                                                             </tr>
                                                         @endif
@@ -153,9 +161,13 @@
                                                             <tr>
                                                                 <td>{{$item->titolo}}</td>
                                                                 <td class="td-actions text-right">
-                                                                    <a href="{{url("/rimuovi_titolo_studio/$item->id")}}" type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                                        <i class="material-icons">close</i>
-                                                                    </a>
+                                                                    <form method="post" id="formEliminaTitoloStudio{{$item->id}}" action="{{url('rimuovi_titolo_studio')}}">
+                                                                        {{csrf_field()}}
+                                                                        <input type="hidden" name="idTitoloStudio" value="{{$item->id}}">
+                                                                        <button onclick="$('#formEliminaTitoloStudio{{$item->id}}').submit()" type="button" rel="tooltip" title="Elimina" class="btn btn-danger btn-simple btn-xs">
+                                                                            <i class="material-icons">close</i>
+                                                                        </button>
+                                                                    </form>
                                                                 </td>
                                                             </tr>
                                                         @endif
@@ -192,9 +204,13 @@
                                                             <tr>
                                                                 <td>{{$item->professione}}</td>
                                                                 <td class="td-actions text-right">
-                                                                    <a href="{{url("/rimuovi_tipo_professione/$item->id")}}" type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
-                                                                        <i class="material-icons">close</i>
-                                                                    </a>
+                                                                    <form method="post" id="formEliminaProfessione{{$item->id}}" action="{{url('rimuovi_tipo_professione')}}">
+                                                                        {{csrf_field()}}
+                                                                        <input type="hidden" name="idProfessione" value="{{$item->id}}">
+                                                                        <button onclick="$('#formEliminaProfessione{{$item->id}}').submit()" type="button" rel="tooltip" title="Elimina" class="btn btn-danger btn-simple btn-xs">
+                                                                            <i class="material-icons">close</i>
+                                                                        </button>
+                                                                    </form>
                                                                 </td>
                                                             </tr>
                                                         @endif

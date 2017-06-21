@@ -53,10 +53,12 @@ Route::post('/inserisci_tipo_documento','GestioneTendineController@inserisciTipo
 Route::post('inserisci_gruppo_servizi','GestioneTendineController@inserisciGruppoServizi');
 Route::post('inserisci_documento_servizi','GestioneTendineController@inserisciDocumentoServizi');
 
-Route::get('/rimuovi_tipo_invalidita/{id}','GestioneTendineController@rimuoviTipoInvalidita');
-Route::get('/rimuovi_titolo_studio/{id}','GestioneTendineController@rimuoviTitoloStudio');
-Route::get('/rimuovi_tipo_professione/{id}','GestioneTendineController@rimuoviTipoProfessione');
-Route::get('/rimuovi_tipo_documento/{id}','GestioneTendineController@rimuoviTipoDocumento');
+Route::post('/rimuovi_tipo_invalidita','GestioneTendineController@rimuoviTipoInvalidita');
+Route::post('/rimuovi_titolo_studio','GestioneTendineController@rimuoviTitoloStudio');
+Route::post('/rimuovi_tipo_professione','GestioneTendineController@rimuoviTipoProfessione');
+Route::post('/rimuovi_tipo_documento','GestioneTendineController@rimuoviTipoDocumento');
+Route::get('/rimuovi_gruppo_servizi/{id}','GestioneTendineController@rimuoviGruppoServizi');
+Route::get('/rimuovi_gruppo_servizi/{id}','GestioneTendineController@rimuoviServizi');
 
 // Route Select2
 Route::get('select2-autocomplete', 'Select2AutocompleteController@layout');
