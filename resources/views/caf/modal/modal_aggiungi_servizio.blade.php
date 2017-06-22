@@ -63,7 +63,6 @@
 </div>
 <script type="text/javascript">
     function setModalAddDocumento(urlOperazione, nome, descrizione, idDocumento){
-        window.alert(descrizione);
         $('.modal-body #id_documento_modal').val(idDocumento);
         $('.modal-body #descrizione_documento_modal').val(descrizione);
         $('.modal-body #nome_documento_modal').val(nome);
