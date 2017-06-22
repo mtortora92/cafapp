@@ -69,18 +69,19 @@
                                                             <td>{{$servizio->prezzo}}</td>
                                                             <td>{{$servizio->gruppiServizi->nome}}</td>
                                                             <td>
-                                                                <!--
-                                                                <button onclick="window.alert('Funzione ancora non disponibile')" type="button" rel="tooltip" title="Modifica" class="btn btn-primary btn-simple btn-xs">
+                                                                <button onclick="window.alert('funzione ancora non disponibile')" type="button" rel="tooltip" title="Modifica" class="btn btn-primary btn-simple btn-xs">
                                                                     <i class="material-icons">edit</i>
                                                                 </button>
-                                                                -->
-                                                                <form method="post" action="{{url("servizi/$servizio->id")}}" id="formEliminaServizio{{$servizio->id}}">
-                                                                    {{csrf_field()}}
-                                                                    {{ method_field('DELETE') }}
-                                                                    <button onclick="$('#formEliminaServizio{{$servizio->id}}').submit()" type="button" rel="tooltip" title="Elimina" class="btn btn-danger btn-simple btn-xs">
+
+                                                                <!--
+                                                                <form style="display:inline" method="post" action="{url("servizi/$servizio->id")}}" id="formEliminaServizio{$servizio->id}}">
+                                                                    {csrf_field()}}
+                                                                    { method_field('DELETE') }}
+                                                                    <button onclick="$('#formEliminaServizio{$servizio->id}}').submit()" type="button" rel="tooltip" title="Elimina" class="btn btn-danger btn-simple btn-xs">
                                                                         <i class="material-icons">close</i>
                                                                     </button>
                                                                 </form>
+                                                                -->
                                                             </td>
                                                         </tr>
                                                     @endforeach
@@ -158,7 +159,7 @@
                                                 <table class="table table-hover">
                                                     <thead>
                                                     <th>Nome</th>
-                                                    <th><i data-toggle="modal" data-target="#modalAggiungiGruppoServizio" role="button" class="material-icons">control_point</i></th>
+                                                    <th><i onclick="setModalAddServizio('{{url('inserisci_gruppo_servizi')}}', '')" data-toggle="modal" data-target="#modalAggiungiGruppoServizio" role="button" class="material-icons">control_point</i></th>
                                                     </thead>
                                                     <tbody>
                                                     @foreach($gruppoServizi as $gruppo)
@@ -166,12 +167,19 @@
                                                         <tr>
                                                             <td>{{$gruppo->nome}}</td>
                                                             <td>
-                                                                <form method="post" action="" id="formEliminaGruppo{{$id}}">
-                                                                    {{csrf_field()}}
-                                                                    <button onclick="window.alert('Funzione ancora non disponibile')//$('#formEliminaGruppo{{$id}}').submit()" type="button" rel="tooltip" title="Elimina" class="btn btn-danger btn-simple btn-xs">
+                                                                <!--
+                                                                <form method="post" style="display:inline" action="{url('rimuovi_gruppo_servizi')}}" id="formEliminaGruppo{$id}}">
+                                                                    {csrf_field()}}
+                                                                    <input type="hidden" name="id_gruppo_da_eliminare" value="{$id}}">
+                                                                    <button onclick="$('#formEliminaGruppo{$id}}').submit()" type="button" rel="tooltip" title="Elimina" class="btn btn-danger btn-simple btn-xs">
                                                                         <i class="material-icons">close</i>
                                                                     </button>
                                                                 </form>
+                                                                -->
+
+                                                                <button onclick="setModalAddServizio('{{url('modifica_gruppo_servizi')}}', '{{$gruppo->nome}}', '{{$id}}')" data-toggle="modal" data-target="#modalAggiungiGruppoServizio" type="button" rel="tooltip" title="Modifica" class="btn btn-primary btn-simple btn-xs">
+                                                                    <i class="material-icons">edit</i>
+                                                                </button>
                                                             </td>
                                                         </tr>
                                                     @endforeach
@@ -190,7 +198,7 @@
                                                 <table class="table table-hover">
                                                     <thead>
                                                     <th>Nome</th>
-                                                    <th><i data-toggle="modal" data-target="#modalAggiungiDocumento" role="button" class="material-icons">control_point</i></th>
+                                                    <th><i onclick="setModalAddDocumento('{{url('inserisci_documento_servizi')}}', '','')" data-toggle="modal" data-target="#modalAggiungiDocumento" role="button" class="material-icons">control_point</i></th>
                                                     </thead>
                                                     <tbody>
                                                     @foreach($documentiServizi as $doc)
@@ -198,12 +206,17 @@
                                                         <tr>
                                                             <td>{{$doc->nome}}</td>
                                                             <td>
-                                                                <form method="post" action="" id="formEliminaDocumentoServizio{{$id}}">
+                                                                <form method="post" style="display:inline" action="{{url('rimuovi_documento_servizi')}}" id="formEliminaDocumentoServizio{{$id}}">
                                                                     {{csrf_field()}}
-                                                                    <button onclick="window.alert('Funzione ancora non disponibile')//$('#formEliminaDocumentoServizio{{$id}}').submit()" type="button" rel="tooltip" title="Elimina" class="btn btn-danger btn-simple btn-xs">
+                                                                    <input type="hidden" name="id_doc_da_eliminare" value="{{$id}}">
+                                                                    <button onclick="$('#formEliminaDocumentoServizio{{$id}}').submit()" type="button" rel="tooltip" title="Elimina" class="btn btn-danger btn-simple btn-xs">
                                                                         <i class="material-icons">close</i>
                                                                     </button>
                                                                 </form>
+
+                                                                <button onclick="setModalAddDocumento('{{url('modifica_documento_servizi')}}', '{{$doc->nome}}','{{$doc->descrizione}}', '{{$id}}')" data-toggle="modal" data-target="#modalAggiungiDocumento" type="button" rel="tooltip" title="Modifica" class="btn btn-primary btn-simple btn-xs">
+                                                                    <i class="material-icons">edit</i>
+                                                                </button>
                                                             </td>
                                                         </tr>
                                                     @endforeach

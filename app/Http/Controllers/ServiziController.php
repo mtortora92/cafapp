@@ -2,6 +2,7 @@
 
 namespace cafapp\Http\Controllers;
 
+use cafapp\Models\DocumentiOutput;
 use cafapp\Models\DocumentiServizi;
 use cafapp\Models\GruppiServizi;
 use cafapp\Models\Servizi;
@@ -118,7 +119,11 @@ class ServiziController extends Controller
         try{
             $servizio = Servizi::find($id);
             $documenti = $servizio->serviziHasDocumentiObbligatoris();
+            $tickets = $servizio->tickets();
+            $documentiOutput = $tickets->documentoOutput();
 
+            $documentiOutput->delete();
+            $tickets->delete();
             $documenti->delete();
             $servizio->delete();
 
@@ -127,7 +132,7 @@ class ServiziController extends Controller
         } catch (\Exception $e){
             DB::rollBack();
             echo $e->getMessage();
-            return back();
+            // return back();
         }
     }
 }

@@ -3,6 +3,7 @@
 namespace cafapp\Http\Controllers;
 
 use cafapp\Models\AltreInfoCliente;
+use cafapp\Models\DocumentiOutput;
 use cafapp\Models\DocumentiServizi;
 use cafapp\Models\DocumentoIdentitum;
 use cafapp\Models\GruppiServizi;
@@ -13,6 +14,7 @@ use cafapp\Models\TipoInvaliditum;
 use cafapp\Models\TipoProfessione;
 use cafapp\Models\TitoloStudio;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class GestioneTendineController extends Controller
 {
@@ -30,6 +32,25 @@ class GestioneTendineController extends Controller
         ]);
     }
 
+    public function modificaDocumentoServizi(Request $data){
+        $id = $data->input('id_documento_modal');
+        $desc = $data->input('descrizione');
+        $nome = $data->input('nome');
+
+        DocumentiServizi::find($id)->update(["nome" => $nome,"descrizione"=>$desc]);
+
+        return redirect('/servizi');
+    }
+
+    public function modificaGruppoServizi(Request $data){
+        $id = $data->input('id_gruppo_servizio_modal');
+        $nome = $data->input('nome');
+
+        GruppiServizi::find($id)->update(["nome" => $nome]);
+
+        return redirect('/servizi');
+    }
+
     public function inserisciGruppoServizi(Request $data){
         GruppiServizi::create([
             'nome' => $data["nome"]
@@ -38,10 +59,43 @@ class GestioneTendineController extends Controller
         return redirect('/servizi');
     }
 
-    public function rimuoviGruppoServizi($id){
-        GruppiServizi::find($id)->delete();
+    public function rimuoviGruppoServizi(Request $data){
+        DB::beginTransaction();
 
-        return redirect('/servizi');
+        try {
+            $idGruppoServizio = $data->input('id_gruppo_da_eliminare');
+
+            $gruppoServizio = GruppiServizi::with('servizis')->where('id', $idGruppoServizio)->first();
+
+            $servizi = $gruppoServizio->servizis;
+
+
+            /*
+            foreach ($servizi as $servizio) {
+                $documentiObbligatoriServizio = $servizio->serviziHasDocumentiObbligatoris;
+                foreach ($documentiObbligatoriServizio as $docObbligatorioServizio) {
+                    $docObbligatorioServizio->delete();
+                }
+
+                $ticketsServizio = $servizio->tickets;
+
+                foreach ($ticketsServizio as $ticket) {
+                    DocumentiOutput::where('ticket_id', $ticket->id)->delete();
+                    $ticket->delete();
+                }
+            }
+
+            */
+
+            $gruppoServizio->delete();
+
+            DB::commit();
+            return redirect('/servizi');
+        } catch (\Exception $e){
+            DB::rollBack();
+            echo $e->getMessage();
+            //return back();
+        }
     }
 
     public function inserisciDocumentoServizi(Request $data){
@@ -53,8 +107,14 @@ class GestioneTendineController extends Controller
         return redirect('/servizi');
     }
 
-    public function rimuoviServizi($id){
-        Servizi::find($id)->delete();
+    public function rimuoviDocumentoServizi(Request $data){
+        $idDocumentoServizio = $data->input('id_doc_da_eliminare');
+
+        $documentoServizio = DocumentiServizi::with('serviziHasDocumentiObbligatoris','documentiConsegnati')->where('id', $idDocumentoServizio)->first();
+
+        $documentoServizio->serviziHasDocumentiObbligatoris()->delete();
+        $documentoServizio->documentiConsegnati()->delete();
+        $documentoServizio->delete();
 
         return redirect('/servizi');
     }

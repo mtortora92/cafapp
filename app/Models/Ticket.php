@@ -63,4 +63,8 @@ class Ticket extends Model
     {
         return $this->belongsTo('cafapp\Models\StatoTicket');
     }
+
+    public function documentoOutput(){
+        return $this->hasOne('cafapp\Models\DocumentiOutput');
+    }
 }

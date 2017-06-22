@@ -50,13 +50,15 @@
                                         <button onclick="location.href='{{url("/diario/$id")}}'" rel="tooltip" title="Diario" class="btn btn-primary btn-simple btn-xs">
                                             <i class="material-icons">perm_contact_calendar</i>
                                         </button>
-                                        <form method="post" action="{{url("/clienti/$id")}}" style="display:inline" id="formEliminaCliente{{$id}}">
-                                            {{csrf_field()}}
-                                            {{ method_field('DELETE') }}
-                                        <button onclick="$('#formEliminaCliente{{$id}}').submit()" type="button" rel="tooltip" title="Elimina" class="btn btn-danger btn-simple btn-xs">
+                                        <!--
+                                        <form method="post" action="{url("/clienti/$id")}}" style="display:inline" id="formEliminaCliente{$id}}">
+                                            {csrf_field()}}
+                                            { method_field('DELETE') }}
+                                        <button onclick="$('#formEliminaCliente{$id}}').submit()" type="button" rel="tooltip" title="Elimina" class="btn btn-danger btn-simple btn-xs">
                                             <i class="material-icons">close</i>
                                         </button>
                                         </form>
+                                        -->
                                     </td>
                                 </tr>
                             @endforeach

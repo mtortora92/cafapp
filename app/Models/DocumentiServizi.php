@@ -32,4 +32,9 @@ class DocumentiServizi extends Model
     {
         return $this->hasMany('cafapp\Models\ServiziHasDocumentiObbligatori');
     }
+
+    public function documentiConsegnati()
+    {
+        return $this->hasMany('cafapp\Models\DocumentiConsegnati');
+    }
 }

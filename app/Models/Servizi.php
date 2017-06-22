@@ -46,4 +46,8 @@ class Servizi extends Model
     {
         return $this->hasMany('cafapp\Models\ServiziHasDocumentiObbligatori');
     }
+
+    public function tickets(){
+        return $this->hasMany('cafapp\Models\Ticket');
+    }
 }

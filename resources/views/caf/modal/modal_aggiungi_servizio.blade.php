@@ -9,10 +9,10 @@
                     <h4 class="modal-title">Inserisci Gruppo Servizio</h4>
                 </div>
                 <div class="modal-body">
-
+                    <input type="hidden" id="id_gruppo_servizio_modal" name="id_gruppo_servizio_modal">
                 <div class="form-group label-floating">
                     <label class="control-label">Nome</label>
-                    <input type="text" name="nome" class="form-control">
+                    <input type="text" id="nome_gruppo_servizio_modal" name="nome" class="form-control">
                 </div>
 
                 </div>
@@ -24,6 +24,13 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    function setModalAddServizio(urlOperazione, nome, idGruppoServizio){
+        $('.modal-body #id_gruppo_servizio_modal').val(idGruppoServizio);
+        $('.modal-body #nome_gruppo_servizio_modal').val(nome);
+        $('#formInserisciGruppoServizio').attr('action', urlOperazione);
+    }
+</script>
 
 <!-- Modal Aggiungi Documento -->
 <div id="modalAggiungiDocumento" class="modal fade" role="dialog">
@@ -36,13 +43,14 @@
                     <h4 class="modal-title">Inserisci Documento Servizi</h4>
                 </div>
                 <div class="modal-body">
+                    <input type="hidden" id="id_documento_modal" name="id_documento_modal">
                     <div class="form-group label-floating">
                         <label class="control-label">Nome</label>
-                        <input type="text" name="nome" class="form-control">
+                        <input type="text" id="nome_documento_modal" name="nome" class="form-control">
                     </div>
                     <div class="form-group label-floating">
                         <label class="control-label">Descrizione</label>
-                        <input type="text" name="descrizione" class="form-control">
+                        <input type="text" id="descrizione_documento_modal" name="descrizione" class="form-control">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -54,6 +62,14 @@
     </div>
 </div>
 <script type="text/javascript">
+    function setModalAddDocumento(urlOperazione, nome, descrizione, idDocumento){
+        window.alert(descrizione);
+        $('.modal-body #id_documento_modal').val(idDocumento);
+        $('.modal-body #descrizione_documento_modal').val(descrizione);
+        $('.modal-body #nome_documento_modal').val(nome);
+        $('#formInserisciServizio').attr('action', urlOperazione);
+    }
+
     $(document).ready(function(){
         var regoleValidate = {
             rules: {
