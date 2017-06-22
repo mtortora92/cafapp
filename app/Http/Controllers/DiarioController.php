@@ -64,7 +64,7 @@ class DiarioController extends Controller
     {
         // $id passato come parametro è l'id del cliente di cui si vuole mostrare il diario
 
-        $diario = VociDiario::where('clienti_id','=',$id)->get();
+        $diario = VociDiario::where('clienti_id','=',$id)->orderBy('created_at','desc')->get();
         $gruppoServizi = GruppiServizi::all();
         $servizi = Servizi::where('gruppi_servizi_id',$gruppoServizi[0]->id)->get();
         $ticketCliente = Ticket::where('clienti_id', $id)->get();

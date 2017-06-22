@@ -22,7 +22,7 @@
                     </div>
                     <div class="card-footer">
                         <div class="stats">
-                            Gestisci account e menù a tendina delle anagrafiche
+                            Gestisci account
                         </div>
                     </div>
                 </div>
