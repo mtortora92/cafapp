@@ -21,53 +21,62 @@ Route::get('/', function () {
     }
 });
 
-/* Route resource Dashboard */
-Route::resource('dashboard', 'DashboardController');
-/* Route resource Clienti */
-Route::resource('clienti', 'ClientiController');
-/* Route resource Account */
-Route::resource('account', 'AccountController');
-/* Route resource Caf */
-Route::resource('caf', 'CafController');
-/* Route resource Diario */
-Route::resource('diario','DiarioController');
-/* Route resource Servizi */
-Route::resource('servizi','ServiziController');
-/* Route resource Ticket */
-Route::resource('ticket','TicketController');
-Route::post('ticket/upload_documento','TicketController@uploadDocumento');
-Route::get('visualizza_documento/{idCliente}/{idDocumento}','TicketController@visualizeDocumento');
-Route::get('visualizza_documento_output/{idCliente}/{idTicket}','TicketController@visualizeDocumentoOutput');
-Route::post('prendi_in_carico_lavorazione','TicketController@prendiInCarico');
-Route::post('chiudi_ticket','TicketController@chiudiTicket');
+Route::group(['middleware' => 'checkIfLogged'], function () {
+    /* Route resource Dashboard */
+    Route::resource('dashboard', 'DashboardController');
+    /* Route resource Clienti */
+    Route::resource('clienti', 'ClientiController');
+    /* Route resource Diario */
+    Route::resource('diario','DiarioController');
+    /* Route resource Ticket */
+    Route::resource('ticket','TicketController');
 
-/*
-    Route della gestione menu a tendina
- */
-Route::get('/tendine', 'GestioneTendineController@index');
+    Route::post('ticket/upload_documento','TicketController@uploadDocumento');
+    Route::get('visualizza_documento/{idCliente}/{idDocumento}','TicketController@visualizeDocumento');
+    Route::get('visualizza_documento_output/{idCliente}/{idTicket}','TicketController@visualizeDocumentoOutput');
+    Route::post('prendi_in_carico_lavorazione','TicketController@prendiInCarico');
+    Route::post('chiudi_ticket','TicketController@chiudiTicket');
 
-Route::post('/inserisci_tipo_invalidita','GestioneTendineController@inserisciTipoInvalidita');
-Route::post('/inserisci_titolo_studio','GestioneTendineController@inserisciTitoloStudio');
-Route::post('/inserisci_tipo_professione','GestioneTendineController@inserisciTipoProfessione');
-Route::post('/inserisci_tipo_documento','GestioneTendineController@inserisciTipoDocumento');
-Route::post('inserisci_gruppo_servizi','GestioneTendineController@inserisciGruppoServizi');
-Route::post('inserisci_documento_servizi','GestioneTendineController@inserisciDocumentoServizi');
+    // Route Select2
+    Route::get('select2-autocomplete', 'Select2AutocompleteController@layout');
+    Route::get('select2-autocomplete-ajax', 'Select2AutocompleteController@getComuni');
 
-Route::post('/rimuovi_tipo_invalidita','GestioneTendineController@rimuoviTipoInvalidita');
-Route::post('/rimuovi_titolo_studio','GestioneTendineController@rimuoviTitoloStudio');
-Route::post('/rimuovi_tipo_professione','GestioneTendineController@rimuoviTipoProfessione');
-Route::post('/rimuovi_tipo_documento','GestioneTendineController@rimuoviTipoDocumento');
-Route::post('/rimuovi_documento_servizi','GestioneTendineController@rimuoviDocumentoServizi');
-Route::post('/rimuovi_gruppo_servizi','GestioneTendineController@rimuoviGruppoServizi');
+    Route::get('/ticket_select_servizi/{idGruppoServizio}', 'Select2AutocompleteController@ticketSelectServizi');
 
-Route::post('/modifica_gruppo_servizi', 'GestioneTendineController@modificaGruppoServizi');
-Route::post('/modifica_documento_servizi', 'GestioneTendineController@modificaDocumentoServizi');
+    Route::group(['middleware' => 'loggedAsSupervisor'], function () {
+        /* Route resource Account */
+        Route::resource('account', 'AccountController');
+    });
 
-// Route Select2
-Route::get('select2-autocomplete', 'Select2AutocompleteController@layout');
-Route::get('select2-autocomplete-ajax', 'Select2AutocompleteController@getComuni');
+    Route::group(['middleware' => 'loggedAsSuperadmin'], function () {
+        /* Route resource Caf */
+        Route::resource('caf', 'CafController');
 
-Route::get('/ticket_select_servizi/{idGruppoServizio}', 'Select2AutocompleteController@ticketSelectServizi');
+        /* Route resource Servizi */
+        Route::resource('servizi','ServiziController');
+        /*
+            Route della gestione menu a tendina
+         */
+        Route::get('/tendine', 'GestioneTendineController@index');
+
+        Route::post('/inserisci_tipo_invalidita', 'GestioneTendineController@inserisciTipoInvalidita');
+        Route::post('/inserisci_titolo_studio', 'GestioneTendineController@inserisciTitoloStudio');
+        Route::post('/inserisci_tipo_professione', 'GestioneTendineController@inserisciTipoProfessione');
+        Route::post('/inserisci_tipo_documento', 'GestioneTendineController@inserisciTipoDocumento');
+        Route::post('inserisci_gruppo_servizi', 'GestioneTendineController@inserisciGruppoServizi');
+        Route::post('inserisci_documento_servizi', 'GestioneTendineController@inserisciDocumentoServizi');
+
+        Route::post('/rimuovi_tipo_invalidita', 'GestioneTendineController@rimuoviTipoInvalidita');
+        Route::post('/rimuovi_titolo_studio', 'GestioneTendineController@rimuoviTitoloStudio');
+        Route::post('/rimuovi_tipo_professione', 'GestioneTendineController@rimuoviTipoProfessione');
+        Route::post('/rimuovi_tipo_documento', 'GestioneTendineController@rimuoviTipoDocumento');
+        Route::post('/rimuovi_documento_servizi', 'GestioneTendineController@rimuoviDocumentoServizi');
+        Route::post('/rimuovi_gruppo_servizi', 'GestioneTendineController@rimuoviGruppoServizi');
+
+        Route::post('/modifica_gruppo_servizi', 'GestioneTendineController@modificaGruppoServizi');
+        Route::post('/modifica_documento_servizi', 'GestioneTendineController@modificaDocumentoServizi');
+    });
+});
 
 // Route per l'autenticazione built in di laravel
 

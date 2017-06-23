@@ -19,14 +19,9 @@ class ServiziController extends Controller
      */
     public function index()
     {
-
-        $gruppoServizi = GruppiServizi::all();
-        $documentiServizi = DocumentiServizi::all();
         $servizi = Servizi::all();
 
         return view('caf.section.gestione_caf.menu_servizi',[
-            "gruppoServizi" => $gruppoServizi,
-            "documentiServizi" => $documentiServizi,
             "servizi" => $servizi
         ]);
     }
@@ -38,7 +33,13 @@ class ServiziController extends Controller
      */
     public function create()
     {
-        //
+        $gruppoServizi = GruppiServizi::all();
+        $documentiServizi = DocumentiServizi::all();
+
+        return view('caf.section.gestione_caf.gestione_servizi',[
+            "gruppoServizi" => $gruppoServizi,
+            "documentiServizi" => $documentiServizi
+        ]);
     }
 
     /**
@@ -69,7 +70,7 @@ class ServiziController extends Controller
         } catch (\Exception $e){
             DB::rollBack();
             echo $e->getMessage();
-            // return back()->with("servizio_store_error","Attenzione: il salvataggio non è andato a buon fine. Riprova!");
+            return back()->with("servizio_store_error","Attenzione: il salvataggio non è andato a buon fine. Riprova!");
         }
     }
 
@@ -92,7 +93,21 @@ class ServiziController extends Controller
      */
     public function edit($id)
     {
-        //
+        $gruppoServizi = GruppiServizi::all();
+        $documentiServizi = DocumentiServizi::all();
+        $servizio = Servizi::find($id);
+        $documentiObbligatori = $servizio->getDocumentiObbligatori;
+        $docObbArray = array();
+        foreach ($documentiObbligatori as $doc){
+            array_push($docObbArray, $doc->id);
+        }
+
+        return view('caf.section.gestione_caf.modifica_servizio',[
+            "gruppoServizi" => $gruppoServizi,
+            "documentiServizi" => $documentiServizi,
+            "servizio" => $servizio,
+            "docObbArray" => $docObbArray
+        ]);
     }
 
     /**
@@ -104,7 +119,30 @@ class ServiziController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->all();
+
+        DB::beginTransaction();
+        try{
+            Servizi::find($id)->update($data);
+
+            ServiziHasDocumentiObbligatori::where('servizi_id',$id)->delete();
+
+            if(isset($data["documentiObbligatori"])) {
+                foreach ($data["documentiObbligatori"] as $doc) {
+                    ServiziHasDocumentiObbligatori::create([
+                        'servizi_id' => $id,
+                        'documenti_servizi_id' => $doc,
+                    ]);
+                }
+            }
+
+            DB::commit();
+            return redirect("servizi");
+        } catch (\Exception $e){
+            DB::rollBack();
+            echo $e->getMessage();
+            return back()->with("servizio_update_error","Attenzione: il salvataggio non è andato a buon fine. Riprova!");
+        }
     }
 
     /**

@@ -39,7 +39,7 @@ class GestioneTendineController extends Controller
 
         DocumentiServizi::find($id)->update(["nome" => $nome,"descrizione"=>$desc]);
 
-        return redirect('/servizi');
+        return redirect('/servizi/create');
     }
 
     public function modificaGruppoServizi(Request $data){
@@ -48,7 +48,7 @@ class GestioneTendineController extends Controller
 
         GruppiServizi::find($id)->update(["nome" => $nome]);
 
-        return redirect('/servizi');
+        return redirect('/servizi/create');
     }
 
     public function inserisciGruppoServizi(Request $data){
@@ -56,38 +56,14 @@ class GestioneTendineController extends Controller
             'nome' => $data["nome"]
         ]);
 
-        return redirect('/servizi');
+        return redirect('/servizi/create');
     }
 
     public function rimuoviGruppoServizi(Request $data){
         DB::beginTransaction();
 
         try {
-            $idGruppoServizio = $data->input('id_gruppo_da_eliminare');
 
-            $gruppoServizio = GruppiServizi::with('servizis')->where('id', $idGruppoServizio)->first();
-
-            $servizi = $gruppoServizio->servizis;
-
-
-            /*
-            foreach ($servizi as $servizio) {
-                $documentiObbligatoriServizio = $servizio->serviziHasDocumentiObbligatoris;
-                foreach ($documentiObbligatoriServizio as $docObbligatorioServizio) {
-                    $docObbligatorioServizio->delete();
-                }
-
-                $ticketsServizio = $servizio->tickets;
-
-                foreach ($ticketsServizio as $ticket) {
-                    DocumentiOutput::where('ticket_id', $ticket->id)->delete();
-                    $ticket->delete();
-                }
-            }
-
-            */
-
-            $gruppoServizio->delete();
 
             DB::commit();
             return redirect('/servizi');
@@ -104,7 +80,7 @@ class GestioneTendineController extends Controller
             'descrizione' => $data["descrizione"],
         ]);
 
-        return redirect('/servizi');
+        return redirect('/servizi/create');
     }
 
     public function rimuoviDocumentoServizi(Request $data){
@@ -116,7 +92,7 @@ class GestioneTendineController extends Controller
         $documentoServizio->documentiConsegnati()->delete();
         $documentoServizio->delete();
 
-        return redirect('/servizi');
+        return redirect('/servizi/create');
     }
 
     public function inserisciTipoInvalidita(Request $data){

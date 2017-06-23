@@ -44,8 +44,9 @@ class UserValidator extends FormRequest
             'username.string' => 'Inserire username',
             'username.max' => 'Inserire username',
             'username.unique' => "L'username inserito è già registrato",
-            'password.required' => "Inserire password",
             'password.confirmed' => "Le password non corrispondono",
+            'password.required' => "La password deve avere almeno 6 caratteri",
+            'password.min' => "La password deve avere almeno 6 caratteri",
         ];
     }
 }

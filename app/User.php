@@ -54,7 +54,7 @@ class User extends Authenticatable
     }
 
     public function isSupervisor(){
-        if($this->idRuolo == 1){
+        if($this->idRuolo == 1 || $this->isSuperAdmin()){
             return true;
         } else {
             return false;

@@ -115,19 +115,19 @@
                                 <ul class="nav nav-tabs" data-tabs="tabs">
                                     <li class="active">
                                         <a href="#profile" data-toggle="tab">
-                                            <i class="material-icons">bug_report</i>
+                                            <i class="material-icons">supervisor_account</i>
                                             Tutti
                                             <div class="ripple-container"></div></a>
                                     </li>
                                     <li class="">
                                         <a href="#messages" data-toggle="tab">
-                                            <i class="material-icons">code</i>
+                                            <i class="material-icons">verified_user</i>
                                             Supervisori
                                             <div class="ripple-container"></div></a>
                                     </li>
                                     <li class="">
                                         <a href="#settings" data-toggle="tab">
-                                            <i class="material-icons">cloud</i>
+                                            <i class="material-icons">accessibility</i>
                                             Operatori
                                             <div class="ripple-container"></div></a>
                                     </li>

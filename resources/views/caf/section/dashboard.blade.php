@@ -52,7 +52,7 @@
                         <p class="category">Lista dei ticket ci cui ti sei preso l'incarico della lavorazione</p>
                     </div>
                     <div class="card-content table-responsive">
-                        <table class="table table-hover">
+                        <table class="table table-hover add_data_table">
                             <thead class="text-info">
                             <th>Cliente</th>
                             <th>Servizio</th>
@@ -89,7 +89,7 @@
                         <p class="category">Lista dei ticket la cui documentazione è stata consegnata</p>
                     </div>
                     <div class="card-content table-responsive">
-                        <table class="table table-hover">
+                        <table class="table table-hover add_data_table">
                             <thead class="text-warning">
                             <th>Cliente</th>
                             <th>Servizio</th>
@@ -126,7 +126,7 @@
                             <p class="category">Lista dei ticket la cui documentazione manca</p>
                         </div>
                         <div class="card-content table-responsive">
-                            <table class="table table-hover">
+                            <table class="table table-hover add_data_table">
                                 <thead class="text-danger">
                                 <th>Cliente</th>
                                 <th>Servizio</th>
@@ -159,4 +159,25 @@
 
 @section('activeDashboardSidebar')
     class="active"
+@endsection
+    @section('functionJavascript')
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('.add_data_table').DataTable({
+                    "language": {
+                        "lengthMenu": "Numero di _MENU_ per pagina",
+                        "zeroRecords": "Nessun Risultato",
+                        "info": "Pagina _PAGE_ di _PAGES_",
+                        "infoEmpty": "Nessun cliente trovato",
+                        "infoFiltered": "",
+                        "search": "Filtra",
+                        "paginate": {
+                            "previous": "Precedente",
+                            "next": "Prossima"
+                        }
+                    }
+                });
+                $('.add_data_table_filter > label > input').attr('class','form-control');
+            } );
+        </script>
 @endsection

@@ -32,7 +32,7 @@
                             @foreach($diario as $eventi)
                                 <tr>
                                     <td>{{$eventi->descrizione}}</td>
-                                    <td>{{str_replace('-', '/', date('d-m-Y', strtotime($eventi->created_at)))}}</td>
+                                    <td>{{str_replace('-', '/', date('d-m-Y H:i', strtotime($eventi->created_at->setTimeZone(new DateTimeZone('Europe/Rome')))))}}</td>
                                     <td>
                                         <form method="post" action="{{url("/diario/$eventi->id")}}" id="formEliminaVoceDiario{{$eventi->id}}">
                                             {{csrf_field()}}

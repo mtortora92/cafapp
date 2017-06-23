@@ -2,6 +2,9 @@
 
 namespace cafapp\Http;
 
+use cafapp\Http\Middleware\CheckIfAutenticated;
+use cafapp\Http\Middleware\CheckIfLoggedAsSuperAdmin;
+use cafapp\Http\Middleware\CheckIfLoggedAsSupervisor;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -56,5 +59,9 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \cafapp\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+
+        'checkIfLogged' => CheckIfAutenticated::class,
+        'loggedAsSupervisor' => CheckIfLoggedAsSupervisor::class,
+        'loggedAsSuperadmin' => CheckIfLoggedAsSuperAdmin::class
     ];
 }
