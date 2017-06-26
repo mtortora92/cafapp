@@ -29,7 +29,7 @@
             </div>
             <div class="col-lg-6 col-md-12 col-sm-12">
                 <div onclick="location.href='{{url('/clienti')}}'" style="cursor:pointer" class="card card-stats">
-                    <div class="card-header" data-background-color="green">
+                    <div class="card-header" data-background-color="purple">
                         <i class="material-icons">person</i>
                     </div>
                     <div class="card-content">
@@ -81,6 +81,45 @@
                 </div>
             </div>
         </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header" data-background-color="green">
+                            <h4 class="title">Ticket presi in carico da altri utenti</h4>
+                            <p class="category">Lista dei ticket che altri utenti hanno preso per la lavorazione</p>
+                        </div>
+                        <div class="card-content table-responsive">
+                            <table class="table table-hover add_data_table">
+                                <thead class="text-success">
+                                <th>Cliente</th>
+                                <th>Servizio</th>
+                                <th>Note</th>
+                                <th>Data</th>
+                                <th>Utente</th>
+                                <th></th>
+                                </thead>
+                                <tbody>
+                                @foreach($ticketPresiInCaricoDaAltriUtenti as $item)
+                                    <tr>
+                                        <td>{{$item->clienti->anagrafica->nome}} {{$item->clienti->anagrafica->cognome}}</td>
+                                        <td>{{$item->servizi->nome}}</td>
+                                        <td>{{$item->note}}</td>
+                                        <td>{{str_replace('-', '/', date('d-m-Y', strtotime($item->created_at)))}}</td>
+                                        <td>{{$item->user->nome}} {{$item->user->cognome}}</td>
+                                        <td>
+                                            @php($idCliente = $item->clienti->id)
+                                            <button onclick="location.href='{{url("/diario/$idCliente")}}'" type="button" rel="tooltip" title="Modifica" class="btn btn-success btn-simple btn-xs">
+                                                <i class="material-icons">edit</i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="card">

@@ -23,6 +23,9 @@
         "classmap": [
             "database"
         ],
+        "files": [
+            "app/my_function.php"
+        ],
         "psr-4": {
             "cafapp\\": "app/"
         }

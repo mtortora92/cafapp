@@ -93,7 +93,7 @@ class AccountController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        echo "Da implementare";
     }
 
     /**

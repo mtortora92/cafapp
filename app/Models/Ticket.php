@@ -30,7 +30,7 @@ class Ticket extends Model
     /**
      * @var array
      */
-    protected $fillable = ['clienti_id', 'servizi_id', 'utente_per_lavorazione', 'stato_ticket_id', 'sconto', 'data_chiusura', 'note'];
+    protected $fillable = ['clienti_id', 'servizi_id', 'utente_per_lavorazione', 'stato_ticket_id', 'importo', 'data_chiusura', 'note'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

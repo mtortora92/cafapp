@@ -52,7 +52,7 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
-                @if(Auth::user()->isSupervisor() || Auth::user()->isSuperAdmin())
+                @if(Auth::user()->isSupervisor())
                 <li @yield('activeGestioneUtentiSidebar')>
                     <a href="/account">
                         <i class="material-icons">content_paste</i>

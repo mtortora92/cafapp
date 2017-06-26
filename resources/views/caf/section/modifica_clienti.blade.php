@@ -418,6 +418,7 @@
                         dateITA: true,
                     },
                     'telefono':{
+                        required: true,
                         number: true,
                     },
                     'cellulare':{
@@ -452,6 +453,7 @@
                         dateITA: "Inserire data in formato corretto"
                     },
                     'telefono':{
+                        required: "Inserire numero",
                         number: "Inserire numero",
                     },
                     'cellulare':{

@@ -57,8 +57,8 @@
                         </select>
                     </div>
                     <div class="form-group label-floating">
-                        <label class="control-label">Sconto</label>
-                        <input type="text" value="0" name="sconto" class="form-control" >
+                        <label class="control-label">Importo (&euro;)</label>
+                        <input type="text" value="{{$servizio->prezzo}}" name="importo" class="form-control" >
                     </div>
                     <div class="form-group label-floating">
                         <label class="control-label">Note</label>

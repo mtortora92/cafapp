@@ -22,7 +22,7 @@
                         <p class="category"></p>
                     </div>
                     <div class="card-content table-responsive">
-                        <table id="example" class="table table-hover">
+                        <table id="diario" class="table table-hover">
                             <thead>
                             <th>Evento</th>
                             <th>Data inserimento</th>
@@ -54,17 +54,17 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header" data-background-color="purple">
+                    <div class="card-header" data-background-color="{{ticketStateBackgroundColor($ticket->stato_ticket_id)}}">
                         <h4 class="title">Ticket: {{$ticket->servizi->nome}}</h4>
                         <p class="category"></p>
                     </div>
                     <div class="card-content table-responsive">
-                        Sconto:  {{$ticket->sconto}}
+                        Importo:  {{$ticket->importo}} &euro;
                         <br>
                         Note:  {{$ticket->note}}
                         <br>
                         Documenti obbligatori:
-                        <table id="example" class="table table-hover">
+                        <table class="table table-hover">
                             <thead>
                                 <th>Nome</th>
                                 <th>Descrizione</th>
@@ -96,11 +96,11 @@
                                             @php($documentoPresenza = \cafapp\Models\DocumentiConsegnati::where('clienti_id',$cliente->id)->where('documenti_servizi_id',$documentoObb->id)->first())
                                             @if(isset($documentoPresenza))
                                                 <button type="button" rel="tooltip" title="Visualizza documento" class="btn btn-simple">
-                                                    <a target="_blank" href="{{url("visualizza_documento/$cliente->id/$documentoObb->id")}}"><i class="material-icons">visibility</i></a>
+                                                    <a target="_blank" href="{{url("visualizza_documento/$cliente->id/$documentoObb->id")}}"><i class="material-icons {{ticketStateTextColor($ticket->stato_ticket_id)}}">visibility</i></a>
                                                 </button>
                                             @else
                                                 <button onclick="window.alert('Allegare documento per visualizzarlo')" type="button" rel="tooltip" title="Documento non allegato" class="btn btn-simple">
-                                                    <a><i class="material-icons">visibility_off</i></a>
+                                                    <a><i class="material-icons {{ticketStateTextColor($ticket->stato_ticket_id)}}">visibility_off</i></a>
                                                 </button>
                                             @endif
                                         </td>
@@ -118,15 +118,16 @@
                             </form>
                         @elseif($ticket->stato_ticket_id == 2 && isset($ticket->utente_per_lavorazione))
                             @if($ticket->utente_per_lavorazione != Auth::user()->id)
-                                <p class="text-primary">
+                                <h6 class="{{ticketStateTextColor($ticket->stato_ticket_id)}}">
                                     La lavorazione è stata già presa in carico dall'utente {{$ticket->user->nome}} {{$ticket->user->cognome}}
-                                </p>
+                                </h6>
                             @else
                                 <button onclick="$('.modal-body #id_ticket_in_modal_chiudi_ticket').val('{{$ticket->id}}')" data-toggle="modal" data-target="#modalChiudiTicket" class="btn btn-primary">Chiudi il Ticket</button>
                             @endif
                         @elseif($ticket->stato_ticket_id == 3)
-                            <p class="text-primary">
+                            <h6 class="{{ticketStateTextColor($ticket->stato_ticket_id)}}">
                                 La lavorazione è stata completata dall'utente {{$ticket->user->nome}} {{$ticket->user->cognome}}
+                            </h6>
                                 <form method="post" enctype="multipart/form-data" style="display:inline" action="{{url('chiudi_ticket')}}">
                                     {{csrf_field()}}
                                     <input type="hidden" name="id_ticket_in_modal_chiudi_ticket" value="{{$ticket->id}}">
@@ -139,14 +140,13 @@
                                 @php($documentoOutputPresenza = \cafapp\Models\DocumentiOutput::where('ticket_id',$ticket->id)->first())
                                 @if(isset($documentoOutputPresenza))
                                     <button type="button" rel="tooltip" title="Visualizza documento del cliente" class="btn btn-simple">
-                                        <a target="_blank" href="{{url("visualizza_documento_output/$cliente->id/$ticket->id")}}"><i class="material-icons">visibility</i></a>
+                                        <a target="_blank" href="{{url("visualizza_documento_output/$cliente->id/$ticket->id")}}"><i class="material-icons {{ticketStateTextColor($ticket->stato_ticket_id)}}">visibility</i></a>
                                     </button>
                                 @else
                                     <button onclick="window.alert('Allegare documento per visualizzarlo')" type="button" rel="tooltip" title="Documento non allegato" class="btn btn-simple btn-success">
-                                        <a><i class="material-icons success">visibility_off</i></a>
+                                        <a><i class="material-icons {{ticketStateTextColor($ticket->stato_ticket_id)}}">visibility_off</i></a>
                                     </button>
                                 @endif
-                            </p>
                         @endif
                     </div>
                 </div>
@@ -165,15 +165,21 @@
 @section('functionJavascript')
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#example').DataTable(
-                {"language": {
+            $('#diario').DataTable({
+                "language": {
                     "lengthMenu": "Numero di _MENU_ per pagina",
                     "zeroRecords": "Nessun Risultato",
                     "info": "Pagina _PAGE_ di _PAGES_",
                     "infoEmpty": "Nessun cliente trovato",
-                    "infoFiltered": ""}
-                });
-            $('#example_filter > label > input').attr('class','form-control');
+                    "infoFiltered": "",
+                    "search": "Filtra",
+                    "paginate": {
+                        "previous": "Precedente",
+                        "next": "Prossima"
+                    }
+                }
+            });
+            $('#diario_filter > label > input').attr('class','form-control');
         } );
     </script>
 @endsection

@@ -17,12 +17,14 @@ class DashboardController extends Controller
     {
         $ticketDaPrendereInCarico = Ticket::where('stato_ticket_id',2)->where('utente_per_lavorazione',null)->orderBy('created_at')->get();
         $ticketPresiInCaricoDaUtenteLoggato = Ticket::where('stato_ticket_id',2)->where('utente_per_lavorazione',Auth::user()->id)->orderBy('created_at')->get();
+        $ticketPresiInCaricoDaAltriUtenti = Ticket::where('stato_ticket_id',2)->where('utente_per_lavorazione',"!=",Auth::user()->id)->where('utente_per_lavorazione',"!=",null)->orderBy('created_at')->get();
         $ticketInAttesaDiDocumentazione = Ticket::where('stato_ticket_id', 1)->orderBy('created_at')->get();
 
         return view('caf.section.dashboard',[
             "ticketDaPrendereInCarico" => $ticketDaPrendereInCarico,
             "ticketPresiInCaricoDaUtenteLoggato" => $ticketPresiInCaricoDaUtenteLoggato,
-            "ticketInAttesaDiDocumentazione" => $ticketInAttesaDiDocumentazione
+            "ticketInAttesaDiDocumentazione" => $ticketInAttesaDiDocumentazione,
+            "ticketPresiInCaricoDaAltriUtenti" => $ticketPresiInCaricoDaAltriUtenti
         ]);
     }
 

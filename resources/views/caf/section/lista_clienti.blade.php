@@ -25,6 +25,7 @@
                             <th>Nome</th>
                             <th>Nato/a il</th>
                             <th>Nato/a a</th>
+                            <th>Codice Fiscale</th>
                             <th></th>
                             </thead>
                             <tbody>
@@ -43,6 +44,7 @@
                                         {{$cliente->anagrafica->luogo_nascita->comune}}
                                         @endif
                                     </td>
+                                    <td>{{$cliente->anagrafica->codiceFiscale}}</td>
                                     <td>
                                         <button onclick="location.href='{{url("/clienti/$id/edit")}}'" type="button" rel="tooltip" title="Modifica" class="btn btn-primary btn-simple btn-xs">
                                             <i class="material-icons">edit</i>

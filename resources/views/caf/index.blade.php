@@ -48,7 +48,7 @@
                                     {{ csrf_field() }}
                                     <div class="row">
                                         <div class="col-md-10 col-md-offset-1">
-                                            <div class="form-group label-floating">
+                                            <div class="form-group label-floating" style="text-align:left">
                                                 <label class="control-label">Username</label>
                                                 <input id="username" name="username" type="text" class="form-control" required>
                                                 @if ($errors->has('username'))
@@ -61,7 +61,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-10 col-md-offset-1">
-                                            <div class="form-group label-floating">
+                                            <div class="form-group label-floating" style="text-align:left">
                                                 <label class="control-label">Password</label>
                                                 <input id="password" type="password" name="password" required class="form-control" >
                                                 @if ($errors->has('password'))

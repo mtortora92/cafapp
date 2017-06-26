@@ -155,15 +155,9 @@
                                                 <td>{{$utente->username}}</td>
                                                 <td><i class="fa fa-check"></i></td>
                                                 <td class="td-actions text-right">
-                                                    <!--
-                                                    <form method="post" action="{{url("/account/$utente->id")}}" id="formEliminaAccount{{$utente->id}}">
-                                                        {{csrf_field()}}
-                                                        {{ method_field('DELETE') }}
-                                                        <button onclick="$('#formEliminaAccount{{$utente->id}}').submit()" type="button" rel="tooltip" title="Rimuovi account" class="btn btn-danger btn-simple btn-xs">
-                                                            <i class="material-icons">close</i>
-                                                        </button>
-                                                    </form>
-                                                    -->
+                                                    <button onclick="setModalEditUser('{{url("account/$utente->id")}}', '{{$utente->nome}}', '{{$utente->cognome}}', '{{$utente->username}}', '{{$utente->idRuolo}}')" data-toggle="modal" data-target="#modalModificaAccount" type="button" rel="tooltip" title="Modifica" class="btn btn-primary btn-simple btn-xs">
+                                                        <i class="material-icons">edit</i>
+                                                    </button>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -174,15 +168,9 @@
                                                 <td>{{$utente->username}}</td>
                                                 <td></td>
                                                 <td class="td-actions text-right">
-                                                    <!--
-                                                    <form method="post" action="{{url("/account/$utente->id")}}" id="formEliminaAccount{{$utente->id}}">
-                                                        {{csrf_field()}}
-                                                        {{ method_field('DELETE') }}
-                                                        <button onclick="$('#formEliminaAccount{{$utente->id}}').submit()" type="button" rel="tooltip" title="Rimuovi account" class="btn btn-danger btn-simple btn-xs">
-                                                            <i class="material-icons">close</i>
-                                                        </button>
-                                                    </form>
-                                                    -->
+                                                    <button onclick="setModalEditUser('{{url("account/$utente->id")}}', '{{$utente->nome}}', '{{$utente->cognome}}', '{{$utente->username}}', '{{$utente->idRuolo}}')" data-toggle="modal" data-target="#modalModificaAccount" type="button" rel="tooltip" title="Modifica" class="btn btn-primary btn-simple btn-xs">
+                                                        <i class="material-icons">edit</i>
+                                                    </button>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -206,15 +194,9 @@
                                             <td>{{$utente->username}}</td>
                                             <td><i class="fa fa-check" aria-hidden="true"></i></td>
                                             <td class="td-actions text-right">
-                                                <!--
-                                                <form method="post" action="{{url("/account/$utente->id")}}" id="formEliminaAccount{{$utente->id}}">
-                                                    {{csrf_field()}}
-                                                    {{ method_field('DELETE') }}
-                                                    <button onclick="$('#formEliminaAccount{{$utente->id}}').submit()" type="button" rel="tooltip" title="Rimuovi account" class="btn btn-danger btn-simple btn-xs">
-                                                        <i class="material-icons">close</i>
-                                                    </button>
-                                                </form>
-                                                -->
+                                                <button onclick="setModalEditUser('{{url("account/$utente->id")}}', '{{$utente->nome}}', '{{$utente->cognome}}', '{{$utente->username}}', '{{$utente->idRuolo}}')" data-toggle="modal" data-target="#modalModificaAccount" type="button" rel="tooltip" title="Modifica" class="btn btn-primary btn-simple btn-xs">
+                                                    <i class="material-icons">edit</i>
+                                                </button>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -238,15 +220,9 @@
                                             <td>{{$utente->username}}</td>
                                             <td></td>
                                             <td class="td-actions text-right">
-                                                <!--
-                                                <form method="post" action="{{url("/account/$utente->id")}}" id="formEliminaAccount{{$utente->id}}">
-                                                    {{csrf_field()}}
-                                                    {{ method_field('DELETE') }}
-                                                    <button onclick="$('#formEliminaAccount{{$utente->id}}').submit()" type="button" rel="tooltip" title="Rimuovi account" class="btn btn-danger btn-simple btn-xs">
-                                                        <i class="material-icons">close</i>
-                                                    </button>
-                                                </form>
-                                                -->
+                                                <button onclick="setModalEditUser('{{url("account/$utente->id")}}', '{{$utente->nome}}', '{{$utente->cognome}}', '{{$utente->username}}', '{{$utente->idRuolo}}')" data-toggle="modal" data-target="#modalModificaAccount" type="button" rel="tooltip" title="Modifica" class="btn btn-primary btn-simple btn-xs">
+                                                    <i class="material-icons">edit</i>
+                                                </button>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -259,6 +235,10 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('modal')
+    @include('caf.modal.modal_modifica_account')
 @endsection
 
 @section('activeGestioneUtentiSidebar')
