@@ -22,9 +22,9 @@
                                         <label class="control-label">Nome</label>
                                         <input type="text" name="nome" class="form-control" >
 
-                                        @if ($errors->has('nome'))
+                                        @if ($errors->errorsInsertUser->has('nome'))
                                             <span>
-                                                <strong>{{ $errors->first('nome') }}</strong>
+                                                <strong>{{ $errors->errorsInsertUser->first('nome') }}</strong>
                                             </span>
                                         @endif
                                     </div>
@@ -36,9 +36,9 @@
                                         <label class="control-label">Cognome</label>
                                         <input type="text" name="cognome" class="form-control" >
 
-                                        @if ($errors->has('cognome'))
+                                        @if ($errors->errorsInsertUser->has('cognome'))
                                             <span>
-                                                <strong>{{ $errors->first('cognome') }}</strong>
+                                                <strong>{{ $errors->errorsInsertUser->first('cognome') }}</strong>
                                             </span>
                                         @endif
                                     </div>
@@ -50,9 +50,9 @@
                                         <label class="control-label">Username</label>
                                         <input type="text" name="username" class="form-control" >
 
-                                        @if ($errors->has('username'))
+                                        @if ($errors->errorsInsertUser->has('username'))
                                             <span>
-                                                <strong>{{ $errors->first('username') }}</strong>
+                                                <strong>{{ $errors->errorsInsertUser->first('username') }}</strong>
                                             </span>
                                         @endif
                                     </div>
@@ -64,9 +64,9 @@
                                         <label class="control-label">Password</label>
                                         <input type="password" name="password" class="form-control" >
 
-                                        @if ($errors->has('password'))
+                                        @if ($errors->errorsInsertUser->has('password'))
                                             <span>
-                                                <strong>{{ $errors->first('password') }}</strong>
+                                                <strong>{{ $errors->errorsInsertUser->first('password') }}</strong>
                                             </span>
                                         @endif
                                     </div>
@@ -155,7 +155,7 @@
                                                 <td>{{$utente->username}}</td>
                                                 <td><i class="fa fa-check"></i></td>
                                                 <td class="td-actions text-right">
-                                                    <button onclick="setModalEditUser('{{url("account/$utente->id")}}', '{{$utente->nome}}', '{{$utente->cognome}}', '{{$utente->username}}', '{{$utente->idRuolo}}')" data-toggle="modal" data-target="#modalModificaAccount" type="button" rel="tooltip" title="Modifica" class="btn btn-primary btn-simple btn-xs">
+                                                    <button onclick="setModalEditUser('{{url("account/$utente->id")}}', '{{$utente->nome}}', '{{$utente->cognome}}', '{{$utente->username}}', '{{$utente->idRuolo}}')" data-toggle="modal" data-target="#modalModificaAccount" type="button" rel="tooltip" title="Modifica password" class="btn btn-primary btn-simple btn-xs">
                                                         <i class="material-icons">edit</i>
                                                     </button>
                                                 </td>
@@ -168,7 +168,7 @@
                                                 <td>{{$utente->username}}</td>
                                                 <td></td>
                                                 <td class="td-actions text-right">
-                                                    <button onclick="setModalEditUser('{{url("account/$utente->id")}}', '{{$utente->nome}}', '{{$utente->cognome}}', '{{$utente->username}}', '{{$utente->idRuolo}}')" data-toggle="modal" data-target="#modalModificaAccount" type="button" rel="tooltip" title="Modifica" class="btn btn-primary btn-simple btn-xs">
+                                                    <button onclick="setModalEditUser('{{url("account/$utente->id")}}', '{{$utente->nome}}', '{{$utente->cognome}}', '{{$utente->username}}', '{{$utente->idRuolo}}')" data-toggle="modal" data-target="#modalModificaAccount" type="button" rel="tooltip" title="Modifica password" class="btn btn-primary btn-simple btn-xs">
                                                         <i class="material-icons">edit</i>
                                                     </button>
                                                 </td>
@@ -194,7 +194,7 @@
                                             <td>{{$utente->username}}</td>
                                             <td><i class="fa fa-check" aria-hidden="true"></i></td>
                                             <td class="td-actions text-right">
-                                                <button onclick="setModalEditUser('{{url("account/$utente->id")}}', '{{$utente->nome}}', '{{$utente->cognome}}', '{{$utente->username}}', '{{$utente->idRuolo}}')" data-toggle="modal" data-target="#modalModificaAccount" type="button" rel="tooltip" title="Modifica" class="btn btn-primary btn-simple btn-xs">
+                                                <button onclick="setModalEditUser('{{url("account/$utente->id")}}', '{{$utente->nome}}', '{{$utente->cognome}}', '{{$utente->username}}', '{{$utente->idRuolo}}')" data-toggle="modal" data-target="#modalModificaAccount" type="button" rel="tooltip" title="Modifica password" class="btn btn-primary btn-simple btn-xs">
                                                     <i class="material-icons">edit</i>
                                                 </button>
                                             </td>
@@ -220,7 +220,7 @@
                                             <td>{{$utente->username}}</td>
                                             <td></td>
                                             <td class="td-actions text-right">
-                                                <button onclick="setModalEditUser('{{url("account/$utente->id")}}', '{{$utente->nome}}', '{{$utente->cognome}}', '{{$utente->username}}', '{{$utente->idRuolo}}')" data-toggle="modal" data-target="#modalModificaAccount" type="button" rel="tooltip" title="Modifica" class="btn btn-primary btn-simple btn-xs">
+                                                <button onclick="setModalEditUser('{{url("account/$utente->id")}}', '{{$utente->nome}}', '{{$utente->cognome}}', '{{$utente->username}}', '{{$utente->idRuolo}}')" data-toggle="modal" data-target="#modalModificaAccount" type="button" rel="tooltip" title="Modifica password" class="btn btn-primary btn-simple btn-xs">
                                                     <i class="material-icons">edit</i>
                                                 </button>
                                             </td>
@@ -239,6 +239,11 @@
 
 @section('modal')
     @include('caf.modal.modal_modifica_account')
+@endsection
+
+@section('functionJavascript')
+    <script src="{{URL::asset('assets/jquery-validate/jquery.validate.js')}}" type="text/javascript"></script>
+    <script src="{{URL::asset('assets/jquery-validate/additional-methods.js')}}" type="text/javascript"></script>
 @endsection
 
 @section('activeGestioneUtentiSidebar')

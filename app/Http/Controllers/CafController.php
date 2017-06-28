@@ -63,10 +63,13 @@ class CafController extends Controller
             User::insertUser($data["utente"]);
 
             DB::commit();
+
+            session()->flash("alert_success", "Salvataggio andato a buon fine");
             return redirect("caf");
         } catch (\Exception $e){
             DB::rollBack();
             echo $e->getMessage();
+            session()->flash("alert_error", "Attenzione: il salvataggio non è andata a buon fine");
             return back()->with("socio_store_error","Attenzione: il salvataggio non è andato a buon fine. Riprova!");
         }
     }

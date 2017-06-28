@@ -25,6 +25,7 @@
                         <table id="diario" class="table table-hover">
                             <thead>
                             <th>Evento</th>
+                            <th>Utente</th>
                             <th>Data inserimento</th>
                             <th></th>
                             </thead>
@@ -32,6 +33,7 @@
                             @foreach($diario as $eventi)
                                 <tr>
                                     <td>{{$eventi->descrizione}}</td>
+                                    <td>{{$eventi->user->nome}} {{$eventi->user->cognome}}</td>
                                     <td>{{str_replace('-', '/', date('d-m-Y H:i', strtotime($eventi->created_at->setTimeZone(new DateTimeZone('Europe/Rome')))))}}</td>
                                     <td>
                                         <form method="post" action="{{url("/diario/$eventi->id")}}" id="formEliminaVoceDiario{{$eventi->id}}">
@@ -55,7 +57,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header" data-background-color="{{ticketStateBackgroundColor($ticket->stato_ticket_id)}}">
-                        <h4 class="title">Ticket: {{$ticket->servizi->nome}}</h4>
+                        <h4 class="title">Ticket: {{$ticket->servizi->nome}} (Aperto da {{$ticket->inseritoDa->nome}} {{$ticket->inseritoDa->cognome}})</h4>
                         <p class="category"></p>
                     </div>
                     <div class="card-content table-responsive">
@@ -95,7 +97,7 @@
                                             </form>
                                             @php($documentoPresenza = \cafapp\Models\DocumentiConsegnati::where('clienti_id',$cliente->id)->where('documenti_servizi_id',$documentoObb->id)->first())
                                             @if(isset($documentoPresenza))
-                                                <button type="button" rel="tooltip" title="Visualizza documento" class="btn btn-simple">
+                                                <button type="button" rel="tooltip" title="Documento inserito da {{$documentoPresenza->user->nome}} {{$documentoPresenza->user->cognome}} il {{str_replace('-', '/', date('d-m-Y', strtotime($documentoPresenza->created_at)))}}" class="btn btn-simple">
                                                     <a target="_blank" href="{{url("visualizza_documento/$cliente->id/$documentoObb->id")}}"><i class="material-icons {{ticketStateTextColor($ticket->stato_ticket_id)}}">visibility</i></a>
                                                 </button>
                                             @else
@@ -114,7 +116,7 @@
                                 {{csrf_field()}}
                                 <input type="hidden" name="cliente_id" value="{{$cliente->id}}">
                                 <input type="hidden" name="ticket_id" value="{{$ticket->id}}">
-                                <input type="submit" class="btn btn-primary" value="Procedi alla lavorazione">
+                                <input type="submit" class="btn btn-warning" value="Procedi alla lavorazione">
                             </form>
                         @elseif($ticket->stato_ticket_id == 2 && isset($ticket->utente_per_lavorazione))
                             @if($ticket->utente_per_lavorazione != Auth::user()->id)
@@ -122,11 +124,14 @@
                                     La lavorazione è stata già presa in carico dall'utente {{$ticket->user->nome}} {{$ticket->user->cognome}}
                                 </h6>
                             @else
-                                <button onclick="$('.modal-body #id_ticket_in_modal_chiudi_ticket').val('{{$ticket->id}}')" data-toggle="modal" data-target="#modalChiudiTicket" class="btn btn-primary">Chiudi il Ticket</button>
+                                <button onclick="$('.modal-body #id_ticket_in_modal_chiudi_ticket').val('{{$ticket->id}}')" data-toggle="modal" data-target="#modalChiudiTicket" class="btn btn-warning">Chiudi il Ticket</button>
                             @endif
                         @elseif($ticket->stato_ticket_id == 3)
                             <h6 class="{{ticketStateTextColor($ticket->stato_ticket_id)}}">
                                 La lavorazione è stata completata dall'utente {{$ticket->user->nome}} {{$ticket->user->cognome}}
+                                @if(isset($ticket->data_chiusura))
+                                    il {{str_replace('-', '/', date('d-m-Y', strtotime($ticket->data_chiusura)))}}
+                                @endif
                             </h6>
                                 <form method="post" enctype="multipart/form-data" style="display:inline" action="{{url('chiudi_ticket')}}">
                                     {{csrf_field()}}
@@ -163,6 +168,8 @@
 @endsection
 
 @section('functionJavascript')
+    <script src="{{URL::asset('assets/jquery-validate/jquery.validate.js')}}" type="text/javascript"></script>
+    <script src="{{URL::asset('assets/jquery-validate/additional-methods.js')}}" type="text/javascript"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             $('#diario').DataTable({

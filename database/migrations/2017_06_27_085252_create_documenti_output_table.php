@@ -14,7 +14,7 @@ class CreateDocumentiOutputTable extends Migration {
 	{
 		Schema::create('documenti_output', function(Blueprint $table)
 		{
-			$table->integer('id',true)->primary();
+			$table->integer('id', true);
 			$table->string('path')->nullable();
 			$table->integer('ticket_id')->index('fk_documenti_output_ticket1_idx');
 		});

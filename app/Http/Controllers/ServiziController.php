@@ -66,10 +66,12 @@ class ServiziController extends Controller
             }
 
             DB::commit();
+            session()->flash("alert_success", "Salvataggio andato a buon fine");
             return redirect("servizi");
         } catch (\Exception $e){
             DB::rollBack();
             echo $e->getMessage();
+            session()->flash("alert_error", "Attenzione: il salvataggio non è andata a buon fine");
             return back()->with("servizio_store_error","Attenzione: il salvataggio non è andato a buon fine. Riprova!");
         }
     }
@@ -137,10 +139,12 @@ class ServiziController extends Controller
             }
 
             DB::commit();
+            session()->flash("alert_success", "Salvataggio andato a buon fine");
             return redirect("servizi");
         } catch (\Exception $e){
             DB::rollBack();
             echo $e->getMessage();
+            session()->flash("alert_error", "Attenzione: il salvataggio non è andata a buon fine");
             return back()->with("servizio_update_error","Attenzione: il salvataggio non è andato a buon fine. Riprova!");
         }
     }
@@ -166,11 +170,13 @@ class ServiziController extends Controller
             $servizio->delete();
 
             DB::commit();
+            session()->flash("alert_success", "Salvataggio andato a buon fine");
             return redirect("servizi");
         } catch (\Exception $e){
             DB::rollBack();
             echo $e->getMessage();
-            // return back();
+            session()->flash("alert_error", "Attenzione: il salvataggio non è andata a buon fine");
+            return back();
         }
     }
 }

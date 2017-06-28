@@ -16,6 +16,7 @@ class AddForeignKeysToDocumentiConsegnatiTable extends Migration {
 		{
 			$table->foreign('clienti_id', 'fk_documenti_consegnati_Clienti1')->references('id')->on('Clienti')->onUpdate('NO ACTION')->onDelete('NO ACTION');
 			$table->foreign('documenti_servizi_id', 'fk_documenti_consegnati_documenti_servizi1')->references('id')->on('documenti_servizi')->onUpdate('NO ACTION')->onDelete('NO ACTION');
+			$table->foreign('users_id', 'fk_documenti_consegnati_users1')->references('id')->on('users')->onUpdate('NO ACTION')->onDelete('NO ACTION');
 		});
 	}
 
@@ -31,6 +32,7 @@ class AddForeignKeysToDocumentiConsegnatiTable extends Migration {
 		{
 			$table->dropForeign('fk_documenti_consegnati_Clienti1');
 			$table->dropForeign('fk_documenti_consegnati_documenti_servizi1');
+			$table->dropForeign('fk_documenti_consegnati_users1');
 		});
 	}
 

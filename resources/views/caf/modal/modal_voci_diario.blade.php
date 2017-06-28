@@ -23,3 +23,19 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#formInserimentoEvento").validate({
+            rules: {
+                'descrizione':{
+                    required: true,
+                },
+            },
+            messages: {
+                'descrizione':{
+                    required: "Descrizione obbligatoria",
+                },
+            }
+        });
+    });
+</script>

@@ -4,6 +4,7 @@ namespace cafapp\Http\Controllers;
 
 use cafapp\Http\Requests\UserValidator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use cafapp\User;
@@ -46,20 +47,22 @@ class AccountController extends Controller
     {
         $data = $request->all();
 
-        /*
-        $validatore = Validator::make($data, [
-            'nome' => 'required|string|max:255',
-            'cognome' => 'required|string|max:255',
-            'username' => 'required|string|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
-        */
+        DB::beginTransaction();
+        try{
+            $data["caf_id"] = Auth::user()->caf_id;
 
-        $data["caf_id"] = Auth::user()->caf_id;
+            User::insertUser($data);
 
-        User::insertUser($data);
+            DB::commit();
 
-        return redirect('/account');
+            session()->flash("alert_success", "Nuovo utente salvato correttamente");
+            return redirect('account');
+        } catch (\Exception $e){
+            DB::rollBack();
+            echo $e->getMessage();
+            session()->flash("alert_error", "Attenzione: il salvataggio non è andato a buon fine");
+            return back()->with("user_update_error","Attenzione: l'operazione non è andata a buon fine. Riprova!");
+        }
     }
 
     /**
@@ -93,7 +96,24 @@ class AccountController extends Controller
      */
     public function update(Request $request, $id)
     {
-        echo "Da implementare";
+        $data = $request->all();
+
+        DB::beginTransaction();
+        try{
+            $user = User::find($id);
+            $user->password = bcrypt($data["password"]);
+            $user->save();
+
+            DB::commit();
+
+            session()->flash("alert_success", "Password correttamente modificata");
+            return redirect('account');
+        } catch (\Exception $e){
+            DB::rollBack();
+            echo $e->getMessage();
+            session()->flash("alert_error", "Attenzione: la modifica non è andata a buon fine");
+            return back()->with("user_update_error","Attenzione: l'operazione non è andata a buon fine. Riprova!");
+        }
     }
 
     /**

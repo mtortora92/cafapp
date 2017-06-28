@@ -20,12 +20,11 @@ class DocumentiConsegnati extends Model
      * @var string
      */
     protected $table = 'documenti_consegnati';
-    public $timestamps = false;
 
     /**
      * @var array
      */
-    protected $fillable = ['clienti_id', 'documenti_servizi_id', 'path'];
+    protected $fillable = ['clienti_id', 'documenti_servizi_id', 'path', 'users_id'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -41,5 +40,10 @@ class DocumentiConsegnati extends Model
     public function documentiServizi()
     {
         return $this->belongsTo('cafapp\Models\DocumentiServizi');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('cafapp\User', 'users_id');
     }
 }

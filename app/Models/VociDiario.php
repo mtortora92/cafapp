@@ -12,8 +12,14 @@ class VociDiario extends Model
 
     protected $fillable = [
         'descrizione',
-        'clienti_id'
+        'clienti_id',
+        'users_id'
     ];
 
     protected $guarded = [];
+
+    public function user()
+    {
+        return $this->belongsTo('cafapp\User','users_id');
+    }
 }

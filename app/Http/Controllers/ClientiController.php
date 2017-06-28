@@ -100,10 +100,12 @@ class ClientiController extends Controller
             $cliente = Clienti::create(["idAnagrafica"=>$anagrafica->id,"idInvalidita"=>$invalidita->id,"idDocumentoIdentita"=>$documento->id,"idAltreInfo"=>$altro->id,"caf_id" => Auth::user()->caf_id]);
 
             DB::commit();
+            session()->flash("alert_success", "Salvataggio andato a buon fine");
             return redirect("clienti");
         } catch (\Exception $e){
             DB::rollBack();
             echo $e->getMessage();
+            session()->flash("alert_error", "Attenzione: il salvataggio non è andata a buon fine");
             return back()->with("socio_store_error","Attenzione: il salvataggio non è andato a buon fine. Riprova!");
         }
     }
@@ -197,10 +199,12 @@ class ClientiController extends Controller
             $altre_info->fill($data)->save();
 
             DB::commit();
+            session()->flash("alert_success", "Salvataggio andato a buon fine");
             return redirect("clienti");
         } catch (\Exception $e){
             DB::rollBack();
             echo $e->getMessage();
+            session()->flash("alert_error", "Attenzione: il salvataggio non è andata a buon fine");
             return back()->with("socio_store_error","Attenzione: il salvataggio non è andato a buon fine. Riprova!");
         }
     }
@@ -229,10 +233,12 @@ class ClientiController extends Controller
             $altre_info->delete();
 
             DB::commit();
+            session()->flash("alert_success", "Salvataggio andato a buon fine");
             return redirect("clienti");
         } catch (\Exception $e){
             DB::rollBack();
             echo $e->getMessage();
+            session()->flash("alert_error", "Attenzione: il salvataggio non è andata a buon fine");
             return back();
         }
     }

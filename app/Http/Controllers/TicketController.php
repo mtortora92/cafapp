@@ -4,8 +4,10 @@ namespace cafapp\Http\Controllers;
 
 use cafapp\Models\DocumentiConsegnati;
 use cafapp\Models\DocumentiOutput;
+use cafapp\Models\Servizi;
 use cafapp\Models\ServiziHasDocumentiObbligatori;
 use cafapp\Models\Ticket;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -49,18 +51,31 @@ class TicketController extends Controller
         try{
             $documentiObbligatori = ServiziHasDocumentiObbligatori::where('servizi_id', $data["servizi_id"])->get();
 
-            if(count($documentiObbligatori) == 0){
-                $data["stato_ticket_id"] = 2;  // Pronto per la lavorazione
-            } else {
-                $data["stato_ticket_id"] = 1;   // In attesa della documentazione
+            $data["inserito_da"] = Auth::user()->id;
+            $data["stato_ticket_id"] = 1;
+
+            // Inserisco evento nel diario
+            $istanzaDiario = new DiarioController();
+            $nomeServizio = Servizi::find($data["servizi_id"])->nome;
+            $messaggio = "Apertura Ticket per $nomeServizio";
+            $istanzaDiario->inserisciEvento($messaggio,$data["clienti_id"]);
+
+            $ticket = Ticket::create($data);
+
+            $statoDocumentazione = $ticket->statoDocumentazione();
+
+            if($statoDocumentazione){
+                $ticket->stato_ticket_id = 2;
+                $ticket->save();
             }
 
-            Ticket::create($data);
             DB::commit();
+            session()->flash("alert_success", "Salvataggio andato a buon fine");
             return redirect("diario/".$data['clienti_id']);
         } catch (\Exception $e){
             DB::rollBack();
             echo $e->getMessage();
+            session()->flash("alert_error", "Attenzione: il salvataggio non è andata a buon fine");
             return back()->with("diario_store_error","Attenzione: il salvataggio non è andato a buon fine. Riprova!");
         }
     }
@@ -126,7 +141,8 @@ class TicketController extends Controller
                 $idTicket = $request->input('id_ticket_in_modal_chiudi_ticket');
                 $idCliente = $request->input('clienti_id');
 
-                Ticket::find($idTicket)->update(["stato_ticket_id" => 3]); // Setta a completato
+                $ticket = Ticket::find($idTicket);
+                $ticket->update(["stato_ticket_id" => 3, "data_chiusura" => Carbon::now()->format('Y-m-d')]); // Setta a completato
 
                 if(isset($documento)) {
                     $destinationPath = "documenti/prodotti/$idCliente/$idTicket";
@@ -146,11 +162,19 @@ class TicketController extends Controller
                     $documento->move($destinationPath, $fileName);
                 }
 
+                // Inserisco evento nel diario
+                $istanzaDiario = new DiarioController();
+                $servizioTicket = $ticket->servizi->nome;
+                $messaggio = "Chiusura ticket $servizioTicket";
+                $istanzaDiario->inserisciEvento($messaggio,$idCliente);
+
                 DB::commit();
+                session()->flash("alert_success", "Salvataggio andato a buon fine");
                 return redirect("diario/".$idCliente);
             } catch (\Exception $e){
                 DB::rollBack();
                 echo $e->getMessage();
+                session()->flash("alert_error", "Attenzione: il salvataggio non è andata a buon fine");
                 return back()->with("diario_delete_error","Attenzione: la cancellazione non è andata a buon fine. Riprova!");
             }
         }
@@ -165,10 +189,12 @@ class TicketController extends Controller
             Ticket::find($idTicket)->update(["utente_per_lavorazione" => Auth::user()->id]);
 
             DB::commit();
+            session()->flash("alert_success", "Salvataggio andato a buon fine");
             return redirect("diario/" . $idCliente);
         } catch (\Exception $e){
             DB::rollBack();
             echo $e->getMessage();
+            session()->flash("alert_error", "Attenzione: il salvataggio non è andata a buon fine");
             return back()->with("diario_delete_error","Attenzione: la cancellazione non è andata a buon fine. Riprova!");
         }
     }
@@ -190,6 +216,7 @@ class TicketController extends Controller
                 $idDocumento = $data["documenti_servizi_id"];
                 $idServizio = $data["servizio_id"];
                 $idTicket = $data["ticket_id"];
+                $data["users_id"] = Auth::user()->id;
 
                 $destinationPath = "documenti/consegnati/$idCliente/$idDocumento/";
                 $extension = $documento->getClientOriginalExtension();
@@ -205,29 +232,31 @@ class TicketController extends Controller
                     $doc = DocumentiConsegnati::create($data);
                 }
 
-                $documentiObbligatoriPerServizio = ServiziHasDocumentiObbligatori::where('servizi_id',$idServizio)->get();
-                $documentazioneCompleta = true;
+                $ticketsDelCliente = Ticket::where('clienti_id',$idCliente)->get();
 
-                foreach ($documentiObbligatoriPerServizio as $item){
-                    $documentoConsegnato = DocumentiConsegnati::where('clienti_id', $idCliente)->where('documenti_servizi_id',$item->documenti_servizi_id);
-
-                    if(!isset($documentoConsegnato)){
-                        $documentazioneCompleta = false;
+                foreach ($ticketsDelCliente as $ticket){
+                    $documentazioneCompletata = $ticket->statoDocumentazione();
+                    if($documentazioneCompletata){
+                        $ticket->stato_ticket_id = 2;
+                        $ticket->save();
                     }
-                }
-
-                if($documentazioneCompleta){
-                    // Se la documentazione è stata completata setta lo stato del ticket a pronto per la presa in carico
-                    Ticket::find($idTicket)->update(["stato_ticket_id" => 2]);
                 }
 
                 $documento->move($destinationPath, $fileName);
 
+                // Inserisco evento nel diario
+                $istanzaDiario = new DiarioController();
+                $nomeDocumento = $doc->documentiServizi->nome;
+                $messaggio = "Aggiunta documento $nomeDocumento";
+                $istanzaDiario->inserisciEvento($messaggio,$idCliente);
+
                 DB::commit();
+                session()->flash("alert_success", "Salvataggio andato a buon fine");
                 return redirect("diario/".$idCliente);
             } catch (\Exception $e){
                 DB::rollBack();
                 echo $e->getMessage();
+                session()->flash("alert_error", "Attenzione: il salvataggio non è andata a buon fine");
                 return back()->with("diario_delete_error","Attenzione: la cancellazione non è andata a buon fine. Riprova!");
             }
         }

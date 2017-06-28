@@ -18,6 +18,7 @@ class CreateVociDiarioTable extends Migration {
 			$table->string('descrizione', 45)->default('');
 			$table->integer('clienti_id')->unsigned()->index('fk_voci_diario_Clienti1_idx');
 			$table->timestamps();
+			$table->integer('users_id')->unsigned()->index('fk_voci_diario_users1_idx');
 		});
 	}
 

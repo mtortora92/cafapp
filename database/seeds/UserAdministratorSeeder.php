@@ -12,7 +12,7 @@ class UserAdministratorSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert(array(
-            array('id'=>1,'nome'=>'Marco','cognome'=>'Tortora','username'=>'developer','password'=>bcrypt("admincaf"),'idRuolo'=>3,'caf_id'=>1),
+            array('id'=>1,'nome'=>'Gerardo','cognome'=>'Vanacore','username'=>'gerardo','password'=>bcrypt("gerardo"),'idRuolo'=>3,'caf_id'=>1),
         ));
     }
 }

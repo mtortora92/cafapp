@@ -42,14 +42,17 @@ class DiarioController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+        $data["users_id"] = Auth::user()->id;
         DB::beginTransaction();
         try{
             VociDiario::create($data);
             DB::commit();
+            session()->flash("alert_success", "Salvataggio andato a buon fine");
             return redirect("diario/".$data['clienti_id']);
         } catch (\Exception $e){
             DB::rollBack();
             echo $e->getMessage();
+            session()->flash("alert_error", "Attenzione: il salvataggio non è andata a buon fine");
             return back()->with("diario_store_error","Attenzione: il salvataggio non è andato a buon fine. Riprova!");
         }
     }
@@ -117,12 +120,22 @@ class DiarioController extends Controller
         try{
             VociDiario::find($id)->delete();
             DB::commit();
+            session()->flash("alert_success", "Salvataggio andato a buon fine");
             return back();
         } catch (\Exception $e){
             DB::rollBack();
             echo $e->getMessage();
+            session()->flash("alert_error", "Attenzione: il salvataggio non è andata a buon fine");
             return back()->with("diario_delete_error","Attenzione: la cancellazione non è andata a buon fine. Riprova!");
         }
 
+    }
+
+    public function inserisciEvento($messaggio, $idCliente){
+        $data["descrizione"] = $messaggio;
+        $data["clienti_id"] = $idCliente;
+        $data["users_id"] = Auth::user()->id;
+
+        VociDiario::create($data);
     }
 }

@@ -18,6 +18,8 @@ class CreateDocumentiConsegnatiTable extends Migration {
 			$table->string('path')->nullable();
 			$table->integer('clienti_id')->unsigned()->index('fk_documenti_consegnati_Clienti1_idx');
 			$table->integer('documenti_servizi_id')->index('fk_documenti_consegnati_documenti_servizi1_idx');
+			$table->integer('users_id')->unsigned()->index('fk_documenti_consegnati_users1_idx');
+			$table->timestamps();
 		});
 	}
 
