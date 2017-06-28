@@ -15,10 +15,21 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $ticketDaPrendereInCarico = Ticket::where('stato_ticket_id',2)->where('utente_per_lavorazione',null)->orderBy('created_at')->get();
-        $ticketPresiInCaricoDaUtenteLoggato = Ticket::where('stato_ticket_id',2)->where('utente_per_lavorazione',Auth::user()->id)->orderBy('created_at')->get();
-        $ticketPresiInCaricoDaAltriUtenti = Ticket::where('stato_ticket_id',2)->where('utente_per_lavorazione',"!=",Auth::user()->id)->where('utente_per_lavorazione',"!=",null)->orderBy('created_at')->get();
-        $ticketInAttesaDiDocumentazione = Ticket::where('stato_ticket_id', 1)->orderBy('created_at')->get();
+        $ticketDaPrendereInCarico = Ticket::whereHas('clienti', function($query) {
+            $query->where('caf_id', Auth::user()->caf_id);
+        })->where('stato_ticket_id',2)->where('utente_per_lavorazione',null)->orderBy('created_at')->get();
+
+
+        $ticketPresiInCaricoDaUtenteLoggato = Ticket::whereHas('clienti', function($query) {
+            $query->where('caf_id', Auth::user()->caf_id);
+        })->where('stato_ticket_id',2)->where('utente_per_lavorazione',Auth::user()->id)->orderBy('created_at')->get();
+
+        $ticketPresiInCaricoDaAltriUtenti = Ticket::whereHas('clienti', function($query) {
+            $query->where('caf_id', Auth::user()->caf_id);
+        })->where('stato_ticket_id',2)->where('utente_per_lavorazione',"!=",Auth::user()->id)->where('utente_per_lavorazione',"!=",null)->orderBy('created_at')->get();
+        $ticketInAttesaDiDocumentazione = Ticket::whereHas('clienti', function($query) {
+            $query->where('caf_id', Auth::user()->caf_id);
+        })->where('stato_ticket_id', 1)->orderBy('created_at')->get();
 
         return view('caf.section.dashboard',[
             "ticketDaPrendereInCarico" => $ticketDaPrendereInCarico,

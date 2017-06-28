@@ -58,7 +58,9 @@
                 <div class="card">
                     <div class="card-header" data-background-color="{{ticketStateBackgroundColor($ticket->stato_ticket_id)}}">
                         <h4 class="title">Ticket: {{$ticket->servizi->nome}} (Aperto da {{$ticket->inseritoDa->nome}} {{$ticket->inseritoDa->cognome}})</h4>
-                        <p class="category"></p>
+                        <p class="category">
+                            <i onclick="location.href='{{url("informativa_privacy/$ticket->id")}}'" class="material-icons" role="button" rel="tooltip" title="Informativa sulla privacy">assignment</i>
+                        </p>
                     </div>
                     <div class="card-content table-responsive">
                         Importo:  {{$ticket->importo}} &euro;
@@ -92,7 +94,7 @@
                                                 <input type="hidden" name="ticket_id" value="{{$ticket->id}}">
                                                 <input name="documento_allegato" onchange="$('#formUploadDoc{{$ticket->id}}{{$documentoObb->id}}').submit()" style="display:none" type="file" id="documentoObb{{$ticket->id}}{{$documentoObb->id}}">
                                                 <button onclick="$('#documentoObb{{$ticket->id}}{{$documentoObb->id}}').click();" type="button" rel="tooltip" title="Allega documento" class="btn btn-simple">
-                                                    <i class="material-icons">attach_file</i>
+                                                    <i class="material-icons {{ticketStateTextColor($ticket->stato_ticket_id)}}">attach_file</i>
                                                 </button>
                                             </form>
                                             @php($documentoPresenza = \cafapp\Models\DocumentiConsegnati::where('clienti_id',$cliente->id)->where('documenti_servizi_id',$documentoObb->id)->first())

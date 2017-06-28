@@ -36,6 +36,7 @@ Route::group(['middleware' => 'checkIfLogged'], function () {
     Route::get('visualizza_documento_output/{idCliente}/{idTicket}','TicketController@visualizeDocumentoOutput');
     Route::post('prendi_in_carico_lavorazione','TicketController@prendiInCarico');
     Route::post('chiudi_ticket','TicketController@chiudiTicket');
+    Route::get('informativa_privacy/{id}','TicketController@documentPdfGenerator');
 
     // Route Select2
     Route::get('select2-autocomplete', 'Select2AutocompleteController@layout');

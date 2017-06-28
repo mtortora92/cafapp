@@ -328,8 +328,12 @@
                         minlength: 5,
                         maxlength: 5,
                     },
+                    'luogoNascita':{
+                        required: true
+                    },
                     'dataNascita':{
-                        dateITA: true,
+                        required: true,
+                        dateITA: true
                     },
                     'dataRilascio':{
                         dateITA: true,
@@ -363,7 +367,11 @@
                         minlength: "5 cifre",
                         maxlength: "5 cifre",
                     },
+                    'luogoNascita':{
+                        required: "Obbligatorio"
+                    },
                     'dataNascita':{
+                        required: "Obbligatorio",
                         dateITA: "Inserire data in formato corretto"
                     },
                     'dataRilascio':{

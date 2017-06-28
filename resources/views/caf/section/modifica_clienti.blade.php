@@ -161,11 +161,6 @@
                                                 <strong>{{ $errors->first("codiceFiscale") }}</strong>
                                             </span>
                                         @endif
-                                        <!--
-                                            Questo campo hidden serve per confrontare verificare se il codice fiscale
-                                            viene modificato. Se viene modificato bisogna controllare che non sia stato
-                                            già inserito nel database.
-                                        -->
                                         <input type="hidden" name="verificaCodiceFiscale" value="{{$cliente->anagrafica->codiceFiscale}}">
                                     </div>
                                 </div>
@@ -408,8 +403,12 @@
                         minlength: 5,
                         maxlength: 5,
                     },
+                    'luogoNascita':{
+                        required: true
+                    },
                     'dataNascita':{
-                        dateITA: true,
+                        required: true,
+                        dateITA: true
                     },
                     'dataRilascio':{
                         dateITA: true,
@@ -443,7 +442,11 @@
                         minlength: "5 cifre",
                         maxlength: "5 cifre",
                     },
+                    'luogoNascita':{
+                        required: "Obbligatorio"
+                    },
                     'dataNascita':{
+                        required: "Obbligatorio",
                         dateITA: "Inserire data in formato corretto"
                     },
                     'dataRilascio':{

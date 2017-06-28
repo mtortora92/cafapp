@@ -8,6 +8,7 @@ use cafapp\Models\Servizi;
 use cafapp\Models\ServiziHasDocumentiObbligatori;
 use cafapp\Models\Ticket;
 use Carbon\Carbon;
+use Dompdf\Dompdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -292,5 +293,38 @@ class TicketController extends Controller
         $response->header("Content-Type", $type);
 
         return $response;
+    }
+
+    public function documentPdfGenerator($id){
+        $ticket = Ticket::find($id);
+        $cliente = $ticket->clienti->anagrafica;
+        $documentiObbligatori = $ticket->servizi->getDocumentiObbligatori;
+
+        $nome = $cliente->nome;
+        $cognome = $cliente->cognome;
+        $comune = $cliente->luogo_nascita->comune;
+        $dataNascita = Carbon::createFromFormat('Y-m-d',$cliente->dataNascita)->format('d/m/Y');
+
+        $html = "Il Signor $nome $cognome, nato a $comune il $dataNascita dichiara di acconsentire al trattamento
+            dei dati ai sensi dell'articolo bla bla bla presenti nei seguenti documenti:<br><br>";
+
+        $html = $html."<ul>";
+        foreach ($documentiObbligatori as $doc){
+            $html = $html."<li>$doc->nome</li>";
+        }
+        $html = $html."</ul>";
+
+        // instantiate and use the dompdf class
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml($html);
+
+        // (Optional) Setup the paper size and orientation
+        $dompdf->setPaper('A4', 'landscape');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser
+        $dompdf->stream();
     }
 }
